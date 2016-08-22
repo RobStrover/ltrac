@@ -1,13 +1,11 @@
 <?php 
 
-session_start();
+require_once 'start.php';
 
 if($_SESSION['user']['authenticated'] !== TRUE) {
 	getError('authentication');
 	exit();
 }
-
-require_once 'start.php';
 
 require_once 'globals.php';
 
