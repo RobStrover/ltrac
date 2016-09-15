@@ -11,4 +11,6 @@
 
 	require(['app/jobModal']);
 
+	require(['app/archive']);
+
 	//require(['app/typeaheadSearch']);	

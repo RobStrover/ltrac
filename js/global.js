@@ -9,7 +9,8 @@ requirejs.config({
         "tabCounters": "tabCounters",
         "jobModal": "jobModal",
         "spinner":"spinner",
-        "typeaheadSearch":"typeaheadSearch"
+        "typeaheadSearch":"typeaheadSearch",
+        "archive":"archive"
 
     }
 });

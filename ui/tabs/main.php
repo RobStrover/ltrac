@@ -9,6 +9,7 @@
     <li role="presentation"><a href="#awaiting-invoice" aria-controls="awaiting invoice" role="tab" data-toggle="tab">Awaiting Invoice <span id="awaiting-invoice-counter" class="badge">0</span></a></li>
     <li role="presentation"><a href="#invoice-sent" aria-controls="invoice sent" role="tab" data-toggle="tab">Invoice Sent <span id="invoice-sent-counter" class="badge">0</span></a></li>
     <li role="presentation"><a href="#invoice-paid" aria-controls="invoice paid" role="tab" data-toggle="tab">Invoice Paid <span id="invoice-paid-counter" class="badge">0</span></a></li>
+    <li role="presentation"><a id="archive-tab" href="#archive" aria-controls="archive" role="tab" data-toggle="tab">Archive</a></li>
   </ul>
 </div>
 </div>
@@ -29,6 +30,7 @@
     <div role="tabpanel" class="tab-pane" id="awaiting-invoice"><?php require __DIR__."/panes/awaiting-invoice.php"; ?></div>
     <div role="tabpanel" class="tab-pane" id="invoice-sent"><?php require __DIR__."/panes/invoice-sent.php"; ?></div>
     <div role="tabpanel" class="tab-pane" id="invoice-paid"><?php require __DIR__."/panes/invoice-paid.php"; ?></div>
+    <div role="tabpanel" class="tab-pane" id="archive"><?php require __DIR__."/panes/archive.php"; ?></div>
   </div>
 
 </div>

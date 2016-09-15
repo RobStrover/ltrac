@@ -20,6 +20,10 @@ switch(filter_input(INPUT_GET, 'data', FILTER_SANITIZE_STRING)) {
 		$jobId = filter_input(INPUT_GET, 'jobid', FILTER_SANITIZE_STRING);
 		getSingleJob($jobId);
 		exit();
+	break;
+	case 'archive':
+		getArchivedJobs();
+		exit();
 	default:
 	    getError('no type');
 	    exit();
@@ -56,12 +60,25 @@ function getCurrentJobs() {
 function getConnectionObject(){
 	global $DbConnection;
 	return $DbConnection->getConnection();
-
 }
 
 function returnJson($data){
 	header('Content-Type: application/json');
 	echo json_encode($data);
+}
+
+function getArchivedJobs(){
+
+	$connection = getConnectionObject();
+
+	if($connection[0] == TRUE) {
+	$archiveQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'Yes' ORDER BY job_id DESC");
+	$result = $connection[1]->query($archiveQuery);
+	$allJobs = mysqli_fetch_all($result,MYSQLI_ASSOC);
+	returnJson($allJobs);
+} else {
+	getError('no db connection');
+}
 }
 
 function getError($reason = '') {

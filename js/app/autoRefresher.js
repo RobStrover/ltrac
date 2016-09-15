@@ -1,6 +1,3 @@
-
-var jobsList = $('.jobs-list');
-
 function autoRefresh() {
 	refreshCurrent();
 	setTimeout(function() { autoRefresh(); }, 20000);
@@ -46,7 +43,7 @@ function addJob(jobData){
 	var newJobParent = $(
 			"<div/>",{
 				"id": 'job-'+jobData.job_id,
-				"class": "col-sm-12 "+jobData.job_status+"-job job updated"
+				"class": "col-sm-12 "+jobData.job_status+"-job job animated fadeIn updated"
 			}
 		)
 	var newJobTitleRow = $(
@@ -116,7 +113,7 @@ function addJob(jobData){
 
 function updateJob(jobData){
 	var jobToCheck = $('#job-'+jobData.job_id);
-	jobToCheck.find('.new-job-title').text(jobData.job_id + " " + jobData.job_name);
+	jobToCheck.find('.new-job-title').text(jobData.job_id + " | " + jobData.job_name);
 	if(!jobToCheck.hasClass(jobData.job_status + '-job')){
 		jobToCheck.addClass(jobData.job_status + '-job')
 		jobToCheck.appendTo('#'+jobData.job_status + '-list');
@@ -144,9 +141,7 @@ function removeNonUpdated(){
 	updateAllCounters();
 }
 
-function refreshArchive(){
-
-}
+var jobsList = $('.jobs-list');
 
 if(jobsList.length > 0) {
 	autoRefresh();
