@@ -92,7 +92,7 @@ function removeJobModals(){
 
 function buildJobModal(singleResponse){
 	var jobData = singleResponse[0];
-	
+
 		var jobModalParent = getTag("<div/>",{"class":"modal fade jobModal","id":"jobModal"+jobData.job_id,"tabindex":"-1","role":"dialog"});
 
 		var jobModalDialog = getTag("<div/>",{"class":"modal-dialog modal-lg","role":"document"});
@@ -188,7 +188,7 @@ function buildJobModal(singleResponse){
 			'<div class="col-sm-12"><hr></div>',
 			jobDescriptionFormGroup,
 			jobPriceFormGroup,
-			jobPaymentTermsFormGroup	
+			jobPaymentTermsFormGroup
 			);
 
 		jobModalTabPanelSiteInfo.append(
@@ -198,12 +198,15 @@ function buildJobModal(singleResponse){
 			jobSiteContactNumberFormGroup
 			);
 
-
 		var jobMapParentDesktop = getTag("<div/>",{"class":"embed-responsive embed-responsive-16by9 hidden-xs"});
 		var jobMapParentMobile = getTag("<div/>",{"class":"embed-responsive embed-responsive-4by3 visible-xs"});
-		var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDPG-Rdgs-Os3F3QMLU418uNObFMi38cy0&origin=SS170NH&destination=RM141AU&avoid=tolls|highways"></iframe>';
+        var jobMapOptionParent = getTag("<div/>",{"class":"container jobMapOptionsParent"}).append(getTag("<div/>",{"class":"row"}));
+        var jobMapOptionTolls = getTag("<div/>",{"class":"col-sm-4"}).append(getTag("<div/>",{"class":"checkbox map-option"}).append(getTag("<label/>",{"text":"Avoid Tolls"}).prepend(getTag("<input/>",{"class":"tolls","type":"checkbox"}))));
+        var jobMapOptionMotorways = getTag("<div/>",{"class":"col-sm-4"}).append(getTag("<div/>",{"class":"checkbox map-option"}).append(getTag("<label/>",{"text":"Avoid Motorways"}).prepend(getTag("<input/>",{"class":"motorways","type":"checkbox"}))));
+        var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDPG-Rdgs-Os3F3QMLU418uNObFMi38cy0&origin=SS170NH&destination=RM141AU&avoid=tolls|highways"></iframe>';
 
-		jobModalTabPanelMap.append(jobMapParentDesktop.append(jobMap), jobMapParentMobile.append(jobMap));
+        jobMapOptionParent.append(jobMapOptionTolls, jobMapOptionMotorways);
+		jobModalTabPanelMap.append(jobMapOptionParent,jobMapParentDesktop.append(jobMap), jobMapParentMobile.append(jobMap));
 		modalBody.append(jobModalTabButtons, jobModalTabPanels);
 
 		modalFooter.append(modalFooterButton);
@@ -211,7 +214,7 @@ function buildJobModal(singleResponse){
 		jobModalContent.append(jobModalHeader);
 		jobModalContent.append(modalBody);
 		jobModalContent.append(modalFooter);
-		
+
 		jobModalDialog.append(jobModalContent);
 		jobModalParent.append(jobModalDialog);
 		$('body').append(jobModalParent);
