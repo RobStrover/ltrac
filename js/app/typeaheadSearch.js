@@ -1,16 +1,4 @@
-
-function typeAheadPrepare(){
-  if(typeof(jQuery) !== "function") {
-  setTimeout(typeAheadPrepare, 500);
-}
-}
-
-typeAheadPrepare();
-setTimeout(typeAheadGo, 4000);
-
-function typeAheadGo() {
-  console.log('running the script');
-    var substringMatcher = function(strs) {
+var substringMatcher = function(strs) {
   return function findMatches(q, cb) {
     var matches, substringRegex;
 
@@ -42,15 +30,12 @@ var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
   'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
   'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 ];
-
 $('#ltrac-search .typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'states',
-  source: substringMatcher(states)
-});
-}
- 
+      hint: true,
+      highlight: true,
+      minLength: 1
+    },
+    {
+      name: 'states',
+      source: substringMatcher(states)
+    });

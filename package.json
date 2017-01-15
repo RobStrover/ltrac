@@ -1,0 +1,29 @@
+{
+  "name": "ltrac",
+  "version": "1.0.0",
+  "description": "A job tracking web application for a small road linemarking company.",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.1",
+    "jade": "^1.11.0",
+    "jquery": "^3.1.1",
+    "minify": "^2.0.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobStrover/ltrac.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RobStrover/ltrac/issues"
+  },
+  "homepage": "https://github.com/RobStrover/ltrac#readme"
+}

@@ -3,14 +3,10 @@
  * https://github.com/twitter/typeahead.js
  * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
  */
-console.log('loaded the script');
 (function(root, factory) {
     if (typeof define === "function" && define.amd) {
 
-        console.log('building');
-
         define("typeahead.js", [ "jquery" ], function(a0) {
-            console.log(factory(a0));
             return factory(a0);
         });
     } else if (typeof exports === "object") {
