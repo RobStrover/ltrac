@@ -3,9 +3,9 @@ var concat = require('gulp-concat');
 
 gulp.task('default', function() {
     gulp.src([
-        'js/app/lib/jquery.js',
-        'js/app/lib/bootstrap.min.js',
-        'js/app/lib/typeahead.jquery.js',
+        'js/lib/jquery.js',
+        'js/lib/bootstrap.min.js',
+        'js/lib/typeahead.jquery.js',
         'js/app/*.js'
     ])
         .pipe(concat('script.js'))
