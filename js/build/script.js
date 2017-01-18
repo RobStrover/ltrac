@@ -1914,6 +1914,7 @@ function removeJobModals(){
 
 function buildJobModal(singleResponse){
 	var jobData = singleResponse[0];
+	console.log(jobData);
 	
 		var jobModalParent = getTag("<div/>",{"class":"modal fade jobModal","id":"jobModal"+jobData.job_id,"tabindex":"-1","role":"dialog"});
 
@@ -2023,7 +2024,12 @@ function buildJobModal(singleResponse){
 
 		var jobMapParentDesktop = getTag("<div/>",{"class":"embed-responsive embed-responsive-16by9 hidden-xs"});
 		var jobMapParentMobile = getTag("<div/>",{"class":"embed-responsive embed-responsive-4by3 visible-xs"});
-		var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDPG-Rdgs-Os3F3QMLU418uNObFMi38cy0&origin=SS170NH&destination=RM141AU&avoid=tolls|highways"></iframe>';
+
+    var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDPG-Rdgs-Os3F3QMLU418uNObFMi38cy0&origin=SS170NH&destination='+ jobData.job_site_address_postcode +'&avoid=tolls|highways"></iframe>';
+console.log(jobData.job_site_address_postocde);
+    if(jobData.job_site_address_postocde == null) {
+			jobMap = '<p class="text-center">Provide a postcode to see the map.</p>';
+		}
 
 		jobModalTabPanelMap.append(jobMapParentDesktop.append(jobMap), jobMapParentMobile.append(jobMap));
 		modalBody.append(jobModalTabButtons, jobModalTabPanels);
