@@ -6,6 +6,7 @@ gulp.task('default', function() {
         'js/lib/jquery.js',
         'js/lib/bootstrap.min.js',
         'js/lib/typeahead.jquery.js',
+        'js/lib/jspdf.debug.js',
         'js/app/*.js'
     ])
         .pipe(concat('script.js'))
