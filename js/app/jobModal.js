@@ -218,12 +218,21 @@ function buildJobModal(singleResponse){
             jobSiteAddressPostcodeFormGroup
 			);
 
+		if(undefined != jobData.job_site_address_postcode){
+			var jobMapParentDesktop = getTag("<div/>",{"class":"embed-responsive embed-responsive-16by9 hidden-xs"});
+			var jobMapParentMobile = getTag("<div/>",{"class":"embed-responsive embed-responsive-4by3 visible-xs"});
+			var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions' +
+				'?key=AIzaSyDPG-Rdgs-Os3F3QMLU418uNObFMi38cy0' +
+				'&origin=SS170NH' +
+				'&destination=' + jobData.job_site_address_postcode +
+				'"></iframe>';
+			// &avoid=tolls|highways.
+			jobModalTabPanelMap.append(jobMapParentDesktop.append(jobMap), jobMapParentMobile.append(jobMap));
+		} else {
+			jobModalTabPanelMap.append(getTag("<p/>",{"class":"text-center","text":"Add a site address postcode to see directions."}));
+		}
 
-		var jobMapParentDesktop = getTag("<div/>",{"class":"embed-responsive embed-responsive-16by9 hidden-xs"});
-		var jobMapParentMobile = getTag("<div/>",{"class":"embed-responsive embed-responsive-4by3 visible-xs"});
-		var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDPG-Rdgs-Os3F3QMLU418uNObFMi38cy0&origin=SS170NH&destination=RM141AU&avoid=tolls|highways"></iframe>';
 
-		jobModalTabPanelMap.append(jobMapParentDesktop.append(jobMap), jobMapParentMobile.append(jobMap));
 		modalBody.append(jobModalTabButtons, jobModalTabPanels);
 
 		modalFooter.append(modalFooterButton);
