@@ -20,19 +20,28 @@ var substringMatcher = function(strs) {
   };
 };
 
-var searchJobs = [
+var searchJobs = [];
 
-];
-$('#ltrac-search .typeahead').typeahead({
+var jobSearch = $('#ltrac-search .typeahead');
+jobSearch.typeahead({
       hint: true,
       highlight: true,
       minLength: 1
     },
     {
-      name: 'states',
-      source: substringMatcher(searchJobs)
+        order: "desc",
+      display: "job_name",
+      source: {
+            data: searchJobs
+      }
+
+        //substringMatcher(searchJobs)
     });
 
+jobSearch.bind('typeahead:select', function(ev, suggestion) {
+    console.log('Selection: ' + suggestion);
+});
+
 function addToSearch(jobData) {
-  searchJobs.push(jobData.job_id + ' ' + jobData.job_name);
+  searchJobs.push(jobData);
 }
