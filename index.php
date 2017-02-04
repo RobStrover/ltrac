@@ -8,7 +8,6 @@ if(getenv('debug_mode') == "TRUE") {
 error_reporting(E_ALL); ini_set('display_errors', 'On');
 }
 
-$DbConnection = new Repositories\Db\Connection\Connection(getenv('db_host'), getenv('db_username'), getenv('db_password'), getenv('db_name'));
 $UserAuthentication = new Repositories\Login\Authenticate\UserAuthentication();
 
 require __DIR__."/app/login_logic.php";

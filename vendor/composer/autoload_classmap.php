@@ -14,7 +14,10 @@ return array(
     'Dotenv\\Exception\\ValidationException' => $vendorDir . '/vlucas/phpdotenv/src/Exception/ValidationException.php',
     'Dotenv\\Loader' => $vendorDir . '/vlucas/phpdotenv/src/Loader.php',
     'Dotenv\\Validator' => $vendorDir . '/vlucas/phpdotenv/src/Validator.php',
-    'Repositories\\Db\\Connection\\Connection' => $baseDir . '/app/Repositories/Db/Connection/Connection.php',
-    'Repositories\\Job\\Reading\\GetJob' => $baseDir . '/app/Repositories/Job/Reading/GetJob.php',
+    'Repositories\\Db\\Connection\\GetConnection' => $baseDir . '/app/Repositories/Db/Connection/GetConnection.php',
+    'Repositories\\Job\\Reading\\GetJobArchive' => $baseDir . '/app/Repositories/Job/Reading/GetJobArchive.php',
+    'Repositories\\Job\\Reading\\GetJobCurrent' => $baseDir . '/app/Repositories/Job/Reading/GetJobCurrent.php',
+    'Repositories\\Job\\Reading\\GetJobSingle' => $baseDir . '/app/Repositories/Job/Reading/GetJobSingle.php',
+    'Repositories\\Job\\Writing\\SaveJob' => $baseDir . '/app/Repositories/Job/Writing/SaveJob.php',
     'Repositories\\Login\\Authenticate\\UserAuthentication' => $baseDir . '/app/Repositories/Login/Authenticate/UserAuthentication.php',
 );
