@@ -1,4 +1,9 @@
-<?php 
+<?php
+
+use \Repositories\Job\Reading\GetJobSingle as GetJobSingle;
+use \Repositories\Job\Reading\GetJobCurrent as GetJobCurrent;
+use \Repositories\Job\Reading\GetJobArchive as GetJobArchive;
+use \Repositories\Job\Writing as SaveJob;
 
 require_once 'start.php';
 
@@ -9,76 +14,36 @@ if($_SESSION['user']['authenticated'] !== TRUE) {
 
 require_once 'globals.php';
 
-$DbConnection = new Repositories\Db\Connection\Connection(getenv('db_host'), getenv('db_username'), getenv('db_password'), getenv('db_name'));
-
 switch(filter_input(INPUT_GET, 'data', FILTER_SANITIZE_STRING)) {
 	case 'current':
-		getCurrentJobs();
-		exit();
+		$GetJobCurrent = new GetJobCurrent();
+        $currentJobs = $GetJobCurrent->getCurrentJobs();
+        returnJson($currentJobs);
 	break;
 	case 'single':
+	    $GetJobSingle = new GetJobSingle();
 		$jobId = filter_input(INPUT_GET, 'jobid', FILTER_SANITIZE_STRING);
-		getSingleJob($jobId);
-		exit();
+		$singleJob = $GetJobSingle->getSingleJob($jobId);
+        returnJson($singleJob);
 	break;
 	case 'archive':
-		getArchivedJobs();
-		exit();
+	    $GetJobArchive = new GetJobArchive();
+		$archivedJobs = $GetJobArchive->getArchiveJobs();
+        returnJson($archivedJobs);
+    break;
+    case 'write':
+
+        exit();
 	default:
 	    getError('no type');
 	    exit();
 	break;
 }
 
-function getSingleJob($jobId){
-		$connection = getConnectionObject();
-		if($connection[0] == TRUE) {
-			$jobQuery = sprintf("SELECT * FROM job WHERE job_id = '%d'", $jobId);
-			$result = $connection[1]->query($jobQuery);
-			$currentJob = mysqli_fetch_all($result,MYSQLI_ASSOC);
-			returnJson($currentJob);
-		} else {
-			getError('no db connection');
-		}
-}
-
-function getCurrentJobs() {
-
-	$connection = getConnectionObject();
-
-		if($connection[0] == TRUE) {
-			$jobQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'No'");
-		$result = $connection[1]->query($jobQuery);
-		$currentJobs = mysqli_fetch_all($result,MYSQLI_ASSOC);
-		returnJson($currentJobs);
-	} else {
-		getError('no db connection');
-	}
-
-}
-
-function getConnectionObject(){
-	global $DbConnection;
-	return $DbConnection->getConnection();
-}
-
 function returnJson($data){
 	header('Content-Type: application/json');
 	echo json_encode($data);
-}
-
-function getArchivedJobs(){
-
-	$connection = getConnectionObject();
-
-	if($connection[0] == TRUE) {
-	$archiveQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'Yes' ORDER BY job_id DESC");
-	$result = $connection[1]->query($archiveQuery);
-	$allJobs = mysqli_fetch_all($result,MYSQLI_ASSOC);
-	returnJson($allJobs);
-} else {
-	getError('no db connection');
-}
+    exit();
 }
 
 function getError($reason = '') {
@@ -91,5 +56,3 @@ function getError($reason = '') {
 							)
 	);
 }
-
-?>

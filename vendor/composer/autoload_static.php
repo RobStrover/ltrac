@@ -37,8 +37,11 @@ class ComposerStaticInit1e675be0973258a443359bf1ffc29630
         'Dotenv\\Exception\\ValidationException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ValidationException.php',
         'Dotenv\\Loader' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Loader.php',
         'Dotenv\\Validator' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Validator.php',
-        'Repositories\\Db\\Connection\\Connection' => __DIR__ . '/../..' . '/app/Repositories/Db/Connection/Connection.php',
-        'Repositories\\Job\\Reading\\GetJob' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJob.php',
+        'Repositories\\Db\\Connection\\GetConnection' => __DIR__ . '/../..' . '/app/Repositories/Db/Connection/GetConnection.php',
+        'Repositories\\Job\\Reading\\GetJobArchive' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJobArchive.php',
+        'Repositories\\Job\\Reading\\GetJobCurrent' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJobCurrent.php',
+        'Repositories\\Job\\Reading\\GetJobSingle' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJobSingle.php',
+        'Repositories\\Job\\Writing\\SaveJob' => __DIR__ . '/../..' . '/app/Repositories/Job/Writing/SaveJob.php',
         'Repositories\\Login\\Authenticate\\UserAuthentication' => __DIR__ . '/../..' . '/app/Repositories/Login/Authenticate/UserAuthentication.php',
     );
 

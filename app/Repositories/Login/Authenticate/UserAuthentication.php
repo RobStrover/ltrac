@@ -1,5 +1,7 @@
 <?php namespace Repositories\Login\Authenticate;
 
+use Repositories\Db\Connection\GetConnection as Connection;
+
 class UserAuthentication
 {
 	public function __construct()
@@ -21,12 +23,11 @@ class UserAuthentication
 
 	private function authenticate($username, $password)
 	{
-		global $DbConnection;
-		$connection = $DbConnection->getConnection();
+		$DbConnection = new Connection;
 
-		if($connection[0] == TRUE) {
-			$userquery = sprintf("SELECT * FROM user WHERE user_username = '%s' and user_password = '%s'", $username, $password);
-		$result = $connection[1]->query($userquery);
+		if(isset($DbConnection->connection)) {
+		$userquery = sprintf("SELECT * FROM user WHERE user_username = '%s' and user_password = '%s'", $username, $password);
+		$result = $DbConnection->connection->query($userquery);
 		$user = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
 		if(!empty($user)){
@@ -37,7 +38,7 @@ class UserAuthentication
 		}
 		
 		} else {
-			return array(FALSE, $connection[1]);
+			return array(FALSE, 'DB Connection not set');
 		}
 	}
 
