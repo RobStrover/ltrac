@@ -34717,7 +34717,6 @@ $('body').on('click', '#modalSaveButton', function(e){
 	removeNode('#modalSaveButton');
 	addButtonSpinner();
 	var jobContent = getJobContent(jobId);
-	var jobContent = objectToJson(jobContent);
 	saveJobContent(jobId, jobContent);
 	removeButtonSpinner();
 
@@ -34909,7 +34908,7 @@ function buildJobModal(singleResponse){
 			// &avoid=tolls|highways.
 			jobModalTabPanelMap.append(jobMapParentDesktop.append(jobMap), jobMapParentMobile.append(jobMap));
 		} else {
-			jobModalTabPanelMap.append(getTag("<p/>",{"class":"text-center","text":"Add a postcode to see directions."}));
+			jobModalTabPanelMap.append(getTag("<p/>",{"class":"text-center","text":"Add a site address postcode to see directions."}));
 		}
 
 
@@ -34967,17 +34966,31 @@ function getJobContent(){
 
 	$.each(contentFields,function(index, node){
 		content[$(node).attr('data-dbvar')] = $(node).val();
-	})
+	});
 	return content;
 }
 
-function objectToJson(object){
-	return JSON.stringify(object);
-}
-
+function objectToJson(objectFields){
+	objectFields.forEach(function(index, value){
+        console.log(index, value);
+    });
+    }
 function saveJobContent(jobId, jobContent){
-	console.log('saving '+jobId);
-	console.log(jobContent);
+    showSpinner();
+    //jobContent = objectToJson(jobContent);
+    console.log(JSON.parse(jobContent));
+    $.ajax({
+        type: 'POST',
+        dataType: "text",
+        url: "app/ajax_return.php",
+        data: {
+            jobId: jobContent
+        },
+        success: function (currentResponse) {
+            //processCurrent(currentResponse);
+        }
+    })
+    hideSpinner();
 }
 function showSpinner(){
 	if($('#loading-spinner').hasClass('hide')){

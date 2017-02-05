@@ -37,7 +37,6 @@ $('body').on('click', '#modalSaveButton', function(e){
 	removeNode('#modalSaveButton');
 	addButtonSpinner();
 	var jobContent = getJobContent(jobId);
-	var jobContent = objectToJson(jobContent);
 	saveJobContent(jobId, jobContent);
 	removeButtonSpinner();
 
@@ -283,19 +282,16 @@ function getTag(type, attributes) {
 
 function getJobContent(){
 	var contentFields = $('.jobModalField');
-	var content = [];
-
-	$.each(contentFields,function(index, node){
-		content[$(node).attr('data-dbvar')] = $(node).val();
-	})
+	// var content = [];
+    //
+	// $.each(contentFields,function(index, node){
+	// 	content[$(node).attr('data-dbvar')] = $(node).val();
+	// });
 	return content;
 }
 
-function objectToJson(object){
-	return JSON.stringify(object);
-}
-
-function saveJobContent(jobId, jobContent){
-	console.log('saving '+jobId);
-	console.log(jobContent);
-}
+function objectToJson(objectFields){
+	objectFields.forEach(function(index, value){
+        console.log(index, value);
+    });
+    }

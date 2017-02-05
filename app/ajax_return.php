@@ -32,9 +32,11 @@ switch(filter_input(INPUT_GET, 'data', FILTER_SANITIZE_STRING)) {
         returnJson($archivedJobs);
     break;
     case 'write':
-
+        die('exiting here!');
         exit();
+    break;
 	default:
+
 	    getError('no type');
 	    exit();
 	break;
