@@ -12,7 +12,7 @@ function refreshCurrent(){
 		success: function (currentResponse) {
 			processCurrent(currentResponse);
 		}
-	})
+	});
 	hideSpinner();
 }
 

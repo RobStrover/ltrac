@@ -24,7 +24,7 @@ $('body').on('click', '#modalEditButton', function(e){
 
 $('body').on('click', '#modalSaveButton', function(e){
 	e.preventDefault();
-	makeReadOnly('.jobModalField');
+	makedisabled('.jobModalField');
 	var jobId = $(this).attr('data-job');
 	var editButton = $(
 		"<button/>", {
@@ -45,12 +45,12 @@ $('body').on('click', '#modalSaveButton', function(e){
 });
 
 function makeEditable(target){
-	$('.jobModalField').removeAttr('readonly');
+	$('.jobModalField').removeAttr('disabled');
 	return;
 }
 
-function makeReadOnly(target){
-	$(target).attr('readonly','readonly');
+function makedisabled(target){
+	$(target).attr('disabled','disabled');
 	return;
 }
 
@@ -91,7 +91,7 @@ function removeJobModals(){
 
 function buildJobModal(singleResponse){
 	var jobData = singleResponse[0];
-	
+
 		var jobModalParent = getTag("<div/>",{"class":"modal fade jobModal","id":"jobModal"+jobData.job_id,"tabindex":"-1","role":"dialog"});
 
 		var jobModalDialog = getTag("<div/>",{"class":"modal-dialog modal-lg","role":"document"});
@@ -112,8 +112,6 @@ function buildJobModal(singleResponse){
 
 		var modalBody = getTag("<div/>",{"id":"modalBody"+jobData.job_id,"class":"modal-body row"});
 
-		var jobNameField = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobName","class":"form-control jobModalField","data-dbvar":"job_name"});
-
 		/*___________________________________________*/
 
 		var modalFooter = getTag("<div/>",{"class":"modal-footer"});
@@ -124,11 +122,11 @@ function buildJobModal(singleResponse){
 		jobModalHeader.append(closeButton);
 		jobModalHeader.append(modalTitle);
 
-		var jobPurchaseOrderNumberFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"});
+		var jobPurchaseOrderNumberFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"});
 		jobPurchaseOrderNumberFormGroup.append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPurchaseOrderNumber","text":"Purchase Order Number"}));
-		jobPurchaseOrderNumberFormGroup.append(getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPurchaseOrderNumber","class":"form-control jobModalField","readonly":"readonly","type":"text","data-dbvar":"job_purchase_order_number","value":jobData.job_purchase_order_number}));
+		jobPurchaseOrderNumberFormGroup.append(getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPurchaseOrderNumber","class":"form-control jobModalField","disabled":"disabled","type":"text","data-dbvar":"job_purchase_order_number","value":jobData.job_purchase_order_number}));
 
-		var jobStatusSelectBox = getTag("<select/>",{"id":"jobModal"+jobData.job_id+"JobStatusSelectBox","class":"form-control jobModalField","data-dbvar":"job_status","readonly":"readonly"});
+		var jobStatusSelectBox = getTag("<select/>",{"id":"jobModal"+jobData.job_id+"JobStatusSelectBox","class":"form-control jobModalField","data-dbvar":"job_status","disabled":"disabled"});
 		jobStatusSelectBox.append(getOptionTag("new-enquiry", "New Enquiry", jobData.job_status));
 		jobStatusSelectBox.append(getOptionTag("quote-given", "Quote Given", jobData.job_status));
 		jobStatusSelectBox.append(getOptionTag("current-job", "Current Job", jobData.job_status));
@@ -136,42 +134,46 @@ function buildJobModal(singleResponse){
 		jobStatusSelectBox.append(getOptionTag("invoice-sent", "Invoice Sent", jobData.job_status));
 		jobStatusSelectBox.append(getOptionTag("invoice-paid", "Invoice Paid", jobData.job_status));
 
-		var jobStatusSelectBoxFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobStatusSelectBox","text":"Job Status"}), jobStatusSelectBox);
+		var jobStatusSelectBoxFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobStatusSelectBox","text":"Job Status"}), jobStatusSelectBox);
 
-		var jobDescription = getTag("<textarea/>",{"id":"jobModal"+jobData.job_id+"JobDescription","class":"form-control jobModalField","data-dbvar":"job_description","readonly":"readonly","rows":"7"}).append(jobData.job_description);
+	var jobNameField = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobName","class":"form-control jobModalField","data-dbvar":"job_name","disabled":"disabled","value":jobData.job_name});
+
+	var jobNameFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"jobNameField","text":"Job Name"}), jobNameField);
+
+		var jobDescription = getTag("<textarea/>",{"id":"jobModal"+jobData.job_id+"JobDescription","class":"form-control jobModalField","data-dbvar":"job_description","disabled":"disabled","rows":"7"}).append(jobData.job_description);
 		var jobDescriptionFormGroup = getTag("<div/>",{"class":"form-group col-sm-12"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobDescription", "text":"Job Description"}), jobDescription);
 
-		var jobSurfaceType = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSurfaceType","class":"form-control jobModalField","data-dbvar":"job_surface_type","readonly":"readonly","type":"text","value":jobData.job_surface_type});
+		var jobSurfaceType = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSurfaceType","class":"form-control jobModalField","data-dbvar":"job_surface_type","disabled":"disabled","type":"text","value":jobData.job_surface_type});
 		var jobSurfaceTypeFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobSurfaceType", "text":"Surface Type"}), jobSurfaceType);
 
-		var jobMaterial = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobMaterial","class":"form-control jobModalField","data-dbvar":"job_material","readonly":"readonly","type":"text","value":jobData.job_material});
+		var jobMaterial = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobMaterial","class":"form-control jobModalField","data-dbvar":"job_material","disabled":"disabled","type":"text","value":jobData.job_material});
 		var jobMaterialFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobMaterial","text":"Material"}),jobMaterial);
 
-		var jobPrice = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPrice","class":"form-control jobModalField","data-dbvar":"job_price","readonly":"readonly","type":"number","value":jobData.job_price});
+		var jobPrice = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPrice","class":"form-control jobModalField","data-dbvar":"job_price","disabled":"disabled","type":"number","value":jobData.job_price});
 		var jobPriceFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPrice","text":"Price (£) inc VAT"}),jobPrice);
 
-		var jobPaymentTerms = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPaymentTerms","class":"form-control jobModalField","data-dbvar":"job_payment_terms","readonly":"readonly","type":"text","value":jobData.job_payment_terms});
+		var jobPaymentTerms = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPaymentTerms","class":"form-control jobModalField","data-dbvar":"job_payment_terms","disabled":"disabled","type":"text","value":jobData.job_payment_terms});
 		var jobPaymentTermsFormGroup = getTag("<div/>",{"class":"form-group col-sm-8"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPaymentTerms","text":"Payment Terms"}),jobPaymentTerms);
 
-		var jobSiteContactName = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteContactName","class":"form-control jobModalField","data-dbvar":"job_site_contact_name","readonly":"readonly","type":"text","value":jobData.job_site_contact_name});
+		var jobSiteContactName = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteContactName","class":"form-control jobModalField","data-dbvar":"job_site_contact_name","disabled":"disabled","type":"text","value":jobData.job_site_contact_name});
 		var jobSiteContactNameFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobSiteContactName","text":"Site Contact Name"}),jobSiteContactName);
 
-		var jobsiteContactNumber = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteContactNumber","class":"form-control jobModalField","data-dbvar":"job_site_contact_number","readonly":"readonly","type":"number","value":jobData.job_site_contact_number});
+		var jobsiteContactNumber = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteContactNumber","class":"form-control jobModalField","data-dbvar":"job_site_contact_number","disabled":"disabled","type":"number","value":jobData.job_site_contact_number});
 		var jobSiteContactNumberFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{'for':"jobModal"+jobData.job_id+"JobSiteContactNumber","text":"Site Contact Number"}),jobsiteContactNumber);
 
-		var jobSiteAddressLine1 = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteAddressLine1", "class":"form-control jobModalField", "data-dbvar":"job_site_address_line_1", "readonly":"readonly", "type":"text", "value":jobData.job_site_address_line_1});
+		var jobSiteAddressLine1 = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteAddressLine1", "class":"form-control jobModalField", "data-dbvar":"job_site_address_line_1", "disabled":"disabled", "type":"text", "value":jobData.job_site_address_line_1});
     	var jobSiteAddressLine1FormGroup = getTag("<div/>",{"class":"form-group col-sm-12"}).append(getTag("<label/>",{'for':"jobModal"+jobData.job_id+"JobSiteAddressLine1","text":"Site Address Line 1"}),jobSiteAddressLine1);
 
-   		var jobSiteAddressLine2 = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteAddressLine2", "class":"form-control jobModalField", "data-dbvar":"job_site_address_line_2", "readonly":"readonly", "type":"text", "value":jobData.job_site_address_line_2});
+   		var jobSiteAddressLine2 = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteAddressLine2", "class":"form-control jobModalField", "data-dbvar":"job_site_address_line_2", "disabled":"disabled", "type":"text", "value":jobData.job_site_address_line_2});
    		var jobSiteAddressLine2FormGroup = getTag("<div/>",{"class":"form-group col-sm-12"}).append(getTag("<label/>",{'for':"jobModal"+jobData.job_id+"JobSiteAddressLine2","text":"Site Address Line 2"}),jobSiteAddressLine2);
 
-   		var jobSiteAddressTown = getTag("<input/>", {"id":"jobModal"+jobData.job_id+"JobSiteAddressTown", "class":"form-control jobModalField", "data-dbvar":"job_site_address_town", "readonly":"readonly", "type":"text", "value":jobData.job_site_address_town});
+   		var jobSiteAddressTown = getTag("<input/>", {"id":"jobModal"+jobData.job_id+"JobSiteAddressTown", "class":"form-control jobModalField", "data-dbvar":"job_site_address_town", "disabled":"disabled", "type":"text", "value":jobData.job_site_address_town});
    		var jobSiteAddressTownFormGroup = getTag("<div/>", {"class":"form-group col-sm-6"}).append(getTag("<label/>",{'for':"jobModal"+jobData.job_id+"JobSiteAddressTown","text":"Site Address Town"}),jobSiteAddressTown);
 
-   		var jobSiteAddressCity = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteAddressCity", "class":"form-control jobModalField", "data-dbvar":"job_site_address_city", "readonly":"readonly", "type":"text", "value":jobData.job_site_address_city});
+   		var jobSiteAddressCity = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteAddressCity", "class":"form-control jobModalField", "data-dbvar":"job_site_address_city", "disabled":"disabled", "type":"text", "value":jobData.job_site_address_city});
    		var jobSiteAddressCityFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobSiteAddressCity","text":"Site Address City"}),jobSiteAddressCity);
 
-        var jobSiteAddressPostcode = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSitePostcode", "class":"form-control jobModalField", "data-dbvar":"job_site_address_postcode", "readonly":"readonly", "type":"text", "value":jobData.job_site_address_postcode});
+        var jobSiteAddressPostcode = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSitePostcode", "class":"form-control jobModalField", "data-dbvar":"job_site_address_postcode", "disabled":"disabled", "type":"text", "value":jobData.job_site_address_postcode});
         var jobSiteAddressPostcodeFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobSiteAddressPostcode","text":"Site Address Postcode"}),jobSiteAddressPostcode);
 
 		jobModalTabButtons = getTag("<ul/>",{"class":"nav nav-tabs","role":"tablist"});
@@ -198,6 +200,7 @@ function buildJobModal(singleResponse){
 
 		jobModalTabPanelBasicInfo.append(
 			jobStatusSelectBoxFormGroup,
+			jobNameFormGroup,
 			jobPurchaseOrderNumberFormGroup,
 			'<div class="col-sm-12"><hr></div>',
 			jobDescriptionFormGroup,
@@ -243,10 +246,10 @@ function buildJobModal(singleResponse){
 		jobModalDialog.append(jobModalContent);
 		jobModalParent.append(jobModalDialog);
 		$('body').append(jobModalParent);
-		$('#jobModal'+jobData.job_id).modal();
-
-
-	return;
+		$('#jobModal'+jobData.job_id).modal()
+        .on('hidden.bs.modal', function (e) {
+            setTimeout(refreshCurrent(), 0);
+        });
 }
 
 function removeNode(target){
@@ -279,19 +282,3 @@ function getTag(type, attributes) {
 			attributes
 		)
 }
-
-function getJobContent(){
-	var contentFields = $('.jobModalField');
-	// var content = [];
-    //
-	// $.each(contentFields,function(index, node){
-	// 	content[$(node).attr('data-dbvar')] = $(node).val();
-	// });
-	return content;
-}
-
-function objectToJson(objectFields){
-	objectFields.forEach(function(index, value){
-        console.log(index, value);
-    });
-    }
