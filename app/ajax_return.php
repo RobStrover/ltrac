@@ -3,7 +3,8 @@
 use \Repositories\Job\Reading\GetJobSingle as GetJobSingle;
 use \Repositories\Job\Reading\GetJobCurrent as GetJobCurrent;
 use \Repositories\Job\Reading\GetJobArchive as GetJobArchive;
-use \Repositories\Job\Writing as SaveJob;
+use \Repositories\Job\Writing\FilterContent as FilterContent;
+use \Repositories\Job\Writing\SaveJob as SaveJob;
 
 require_once 'start.php';
 
@@ -14,30 +15,46 @@ if($_SESSION['user']['authenticated'] !== TRUE) {
 
 require_once 'globals.php';
 
-switch(filter_input(INPUT_GET, 'data', FILTER_SANITIZE_STRING)) {
-	case 'current':
-		$GetJobCurrent = new GetJobCurrent();
-        $currentJobs = $GetJobCurrent->getCurrentJobs();
-        returnJson($currentJobs);
-	break;
-	case 'single':
-	    $GetJobSingle = new GetJobSingle();
-		$jobId = filter_input(INPUT_GET, 'jobid', FILTER_SANITIZE_STRING);
-		$singleJob = $GetJobSingle->getSingleJob($jobId);
-        returnJson($singleJob);
-	break;
-	case 'archive':
-	    $GetJobArchive = new GetJobArchive();
-		$archivedJobs = $GetJobArchive->getArchiveJobs();
-        returnJson($archivedJobs);
-    break;
-    case 'write':
+if(array_key_exists('function',$_POST)){
 
-        exit();
-	default:
-	    getError('no type');
-	    exit();
-	break;
+    switch(filter_input(INPUT_POST, 'function', FILTER_SANITIZE_STRING)) {
+        case 'saveJob':
+            $jobId = filter_input(INPUT_POST, 'jobId', FILTER_SANITIZE_NUMBER_INT);
+            $FilterContent = new FilterContent();
+            $filteredJobContent = $FilterContent->filterJobContent($_POST['content']);
+            $SaveJob = new SaveJob();
+            if($SaveJob->saveJobContent($jobId, $filteredJobContent)){
+                return true;
+            }
+
+        break;
+    }
+
+} else {
+
+    switch(filter_input(INPUT_GET, 'data', FILTER_SANITIZE_STRING)) {
+        case 'current':
+            $GetJobCurrent = new GetJobCurrent();
+            $currentJobs = $GetJobCurrent->getCurrentJobs();
+            returnJson($currentJobs);
+            break;
+        case 'single':
+            $GetJobSingle = new GetJobSingle();
+            $jobId = filter_input(INPUT_GET, 'jobid', FILTER_SANITIZE_STRING);
+            $singleJob = $GetJobSingle->getSingleJob($jobId);
+            returnJson($singleJob);
+            break;
+        case 'archive':
+            $GetJobArchive = new GetJobArchive();
+            $archivedJobs = $GetJobArchive->getArchiveJobs();
+            returnJson($archivedJobs);
+            break;
+        default:
+            getError('no function requested');
+            exit();
+            break;
+    }
+
 }
 
 function returnJson($data){
