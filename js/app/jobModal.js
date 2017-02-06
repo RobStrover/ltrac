@@ -220,7 +220,7 @@ function buildJobModal(singleResponse){
             jobSiteAddressPostcodeFormGroup
 			);
 
-		if(undefined != jobData.job_site_address_postcode){
+		if(undefined != jobData.job_site_address_postcode && "" != jobData.job_site_address_postcode){
 			var jobMapParentDesktop = getTag("<div/>",{"class":"embed-responsive embed-responsive-16by9 hidden-xs"});
 			var jobMapParentMobile = getTag("<div/>",{"class":"embed-responsive embed-responsive-4by3 visible-xs"});
 			var jobMap = '<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/directions' +
