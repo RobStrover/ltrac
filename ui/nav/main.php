@@ -20,7 +20,7 @@
         </div>
       </div>
       <ul class="nav navbar-nav">
-        <li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Job</a></li>
+        <li><a href="#" id="add-job-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Job</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
