@@ -4,6 +4,7 @@ use \Repositories\Job\Reading\GetJobSingle as GetJobSingle;
 use \Repositories\Job\Reading\GetJobCurrent as GetJobCurrent;
 use \Repositories\Job\Reading\GetJobArchive as GetJobArchive;
 use \Repositories\Job\Writing\FilterContent as FilterContent;
+use \Repositories\Job\Writing\AddJob as AddJob;
 use \Repositories\Job\Writing\SaveJob as SaveJob;
 
 require_once 'start.php';
@@ -26,8 +27,14 @@ if(array_key_exists('function',$_POST)){
             if($SaveJob->saveJobContent($jobId, $filteredJobContent)){
                 return true;
             }
-
         break;
+        case 'addJob':
+            $AddJob = new AddJob();
+            $addedJob = $AddJob->addJob();
+            $GetJobSingle = new GetJobSingle();
+            $singleJob = $GetJobSingle->getSingleJob($addedJob);
+            returnJson($singleJob);
+            break;
     }
 
 } else {

@@ -14,16 +14,15 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="hide"><a href="#">Link</a></li>
-      </ul>
       <div class="navbar-left navbar-form">
         <div id="ltrac-search" class="form-group">
           <input type="text" class="form-control typeahead" placeholder="Search">
         </div>
       </div>
+      <ul class="nav navbar-nav">
+        <li><a href="#" id="add-job-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Job</a></li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="hide"><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logged in as <?= !empty($_SESSION['user']['user_username']) ? $_SESSION['user']['user_username'] : 'Administrator' ?> <span class="caret"></span></a>
           <ul class="dropdown-menu">
