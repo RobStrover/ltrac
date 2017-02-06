@@ -30,7 +30,7 @@ class SaveJob
         foreach($jobContent as $key => $value)
         {
             $preparedJobContent = $preparedJobContent .= $key.'="'.$value.'"';
-            if(end(array_flip($jobContent)) !== $key) {
+            if(end(array_keys($jobContent)) !== $key) {
                 $preparedJobContent .= ',';
             }
         }
