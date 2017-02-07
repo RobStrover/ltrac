@@ -34954,7 +34954,10 @@ function buildJobModal(singleResponse){
 		jobModalDialog.append(jobModalContent);
 		jobModalParent.append(jobModalDialog);
 		$('body').append(jobModalParent);
-		$('#jobModal'+jobData.job_id).modal()
+		$('#jobModal'+jobData.job_id).modal({
+			backdrop: 'static',
+			keyboard: 'true'
+		})
         .on('hidden.bs.modal', function (e) {
             setTimeout(refreshCurrent(), 0);
         });
