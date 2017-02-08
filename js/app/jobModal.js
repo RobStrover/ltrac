@@ -152,8 +152,15 @@ function buildJobModal(singleResponse){
 		var jobPrice = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPrice","class":"form-control jobModalField","data-dbvar":"job_price","disabled":"disabled","type":"number","value":jobData.job_price});
 		var jobPriceFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPrice","text":"Price (£) inc VAT"}),jobPrice);
 
-		var jobPaymentTerms = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPaymentTerms","class":"form-control jobModalField","data-dbvar":"job_payment_terms","disabled":"disabled","type":"text","value":jobData.job_payment_terms});
-		var jobPaymentTermsFormGroup = getTag("<div/>",{"class":"form-group col-sm-8"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPaymentTerms","text":"Payment Terms"}),jobPaymentTerms);
+    var jobPaymentTermsNumber = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPaymentTermsNumber","class":"form-control jobModalField","data-dbvar":"job_payment_terms_number","disabled":"disabled","type":"number","value":jobData.job_payment_terms_number});
+    var jobPaymentTermsNumberFormGroup = getTag("<div/>",{"class":"form-group col-sm-4 col-xs-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPaymentTermsNumber","text":"Payment Expected After"}),jobPaymentTermsNumber);
+
+
+	var jobPaymentTermsDenomination = getTag("<select/>",{"id":"jobModal"+jobData.job_id+"JobPaymentTermsDenomination","class":"form-control jobModalField","data-dbvar":"job_payment_terms_denomination","disabled":"disabled"});
+    jobPaymentTermsDenomination.append(getOptionTag("days", "Days", jobData.job_payment_terms_denomination));
+    jobPaymentTermsDenomination.append(getOptionTag("months", "Months", jobData.job_payment_terms_denomination));
+
+	var jobPaymentTermsDenominationFormGroup = getTag("<div/>",{"class":"form-group col-sm-4 col-xs-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPaymentTermsDenomination","text":"Days / Months"}), jobPaymentTermsDenomination);
 
 		var jobSiteContactName = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSiteContactName","class":"form-control jobModalField","data-dbvar":"job_site_contact_name","disabled":"disabled","type":"text","value":jobData.job_site_contact_name});
 		var jobSiteContactNameFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobSiteContactName","text":"Site Contact Name"}),jobSiteContactName);
@@ -205,7 +212,8 @@ function buildJobModal(singleResponse){
 			'<div class="col-sm-12"><hr></div>',
 			jobDescriptionFormGroup,
 			jobPriceFormGroup,
-			jobPaymentTermsFormGroup	
+            jobPaymentTermsNumberFormGroup,
+            jobPaymentTermsDenominationFormGroup
 			);
 
 		jobModalTabPanelSiteInfo.append(
