@@ -8,7 +8,6 @@ $('body').on('click', '#modalEditButton', function(e){
 	e.preventDefault();
 	makeEditable('.jobModalField');
 	var jobId = $(this).attr('data-job');
-	//var saveButton = buildNode('button', {'id':'modalSaveButton', 'type':'button', 'data-job':jobId, 'class':'btn btn-primary', 'text':'Save'});
 		var saveButton = $(
 			"<button/>", {
 				"id":"modalSaveButton",
