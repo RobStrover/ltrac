@@ -12,7 +12,7 @@ class GetJobCurrent
     public function getCurrentJobs() {
         $DbConnection = new Connection();
         if(null !== $DbConnection->connection) {
-            $jobQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'No'");
+            $jobQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'No' AND job_deleted = '0'");
             $result = $DbConnection->connection->query($jobQuery);
             $currentJobs = mysqli_fetch_all($result,MYSQLI_ASSOC);
             return $currentJobs;
