@@ -34707,12 +34707,32 @@ if(jobsList.length > 0) {
 	autoRefresh();
 }
 
-function buildConfirmModal(message) {
+function buildJobConfirmModal(operation, job_id, message) {
+
+    if(!operation || !job_id) {
+        return;
+    }
 
     message = message || "Are you sure?";
 
+    var buttonType;
+    var buttonText;
+    var buttonIcon;
+
+    switch(operation) {
+        case 'delete':
+            buttonType = 'danger';
+            buttonText = 'Delete';
+            buttonIcon = 'glyphicon-trash';
+            break;
+        default:
+            buttonType = 'primary';
+            buttonText = 'Confirm';
+            buttonIcon = 'glyphicon-ok';
+    };
+
     var confirmModalParent = getTag("<div/>",{
-        "id":"confirm-modal",
+        "id":job_id+"-"+operation+"-"+"confirm-modal",
         "class":"modal fade modal",
         "tabindex":"-1",
         "role":"dialog"
@@ -34757,19 +34777,24 @@ function buildConfirmModal(message) {
     });
 
     var confirmModalCancelButton = getTag("<button/>",{
+        "id":job_id+"-"+operation+"-"+"cancel-btn",
         "class":"btn btn-default",
-        "text":"Cancel",
-        "data-response":false
+        "text":"Cancel"
     });
 
     var confirmModalConfirmButtonParent = getTag("<div/>",{
+        "id":job_id+"-"+operation+"-"+"confirm-btn",
         "class":"col-xs-6 text-center"
     });
 
     var confirmModalConfirmButton = getTag("<button/>",{
-        "class":"btn btn-primary",
-        "text":"Confirm",
-        "data-response":true
+        "class":"btn btn-"+buttonType,
+        "text":buttonText + " "
+    });
+
+    var confirmModalConfirmButtonIcon = getTag("<span/>",{
+        "class":"glyphicon "+buttonIcon,
+        "aria-hidden":"true"
     });
 
     confirmModalBody.append(confirmModalRow);
@@ -34779,12 +34804,15 @@ function buildConfirmModal(message) {
     confirmModalCancelButtonParent.append(confirmModalCancelButton);
     confirmModalRow.append(confirmModalConfirmButtonParent);
     confirmModalConfirmButtonParent.append(confirmModalConfirmButton);
+    confirmModalConfirmButton.append(confirmModalConfirmButtonIcon);
 
     $('body').append(confirmModalParent);
-    $('#confirm-modal').modal({
-        backdrop: 'static',
+
+    $("#"+job_id+"-"+operation+"-"+"confirm-modal").modal({
         keyboard: 'true'
-    })
+    });
+
+
 }
 
 
