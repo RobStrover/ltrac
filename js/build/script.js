@@ -34560,7 +34560,7 @@ function addArchivedJob(jobData){
 }
 function autoRefresh() {
 	refreshCurrent();
-	setTimeout(function() { autoRefresh(); }, 20000);
+	setTimeout(function() { autoRefresh(); }, (5 * 60000));
 }
 
 function refreshCurrent(){
@@ -34729,7 +34729,7 @@ function buildJobConfirmModal(operation, job_id, message) {
             buttonType = 'primary';
             buttonText = 'Confirm';
             buttonIcon = 'glyphicon-ok';
-    };
+    }
 
     var confirmModalParent = getTag("<div/>",{
         "id":job_id+"-"+operation+"-"+"confirm-modal",
@@ -34783,11 +34783,12 @@ function buildJobConfirmModal(operation, job_id, message) {
     });
 
     var confirmModalConfirmButtonParent = getTag("<div/>",{
-        "id":job_id+"-"+operation+"-"+"confirm-btn",
         "class":"col-xs-6 text-center"
     });
 
     var confirmModalConfirmButton = getTag("<button/>",{
+        "id":job_id+"-"+operation+"-"+"confirm-btn",
+        "data-jobid":job_id,
         "class":"btn btn-"+buttonType,
         "text":buttonText + " "
     });
@@ -34808,11 +34809,45 @@ function buildJobConfirmModal(operation, job_id, message) {
 
     $('body').append(confirmModalParent);
 
-    $("#"+job_id+"-"+operation+"-"+"confirm-modal").modal({
+
+
+    confirmModalParent.modal({
         keyboard: 'true'
     });
 
+    confirmModalParent.on('hidden.bs.modal', function(e) {
+        confirmModalConfirmButton.unbind("click");
+        confirmModalCancelButton.unbind("click");
+        confirmModalParent.remove();
+    });
 
+    confirmModalConfirmButton.on("click", function() {
+        job_id = $(this).data("jobid");
+        deleteJob(job_id);
+    });
+
+    confirmModalCancelButton.on("click", function() {
+        confirmModalParent.modal('hide');
+    });
+
+    function deleteJob(job_id){
+
+        showSpinner();
+        $.ajax({
+            type: 'POST',
+            dataType: "text",
+            url: "app/ajax_return.php",
+            data: {
+                function: 'deleteJob',
+                jobId: job_id
+            },
+            success: function () {
+                confirmModalParent.modal('hide');
+                refreshCurrent();
+            }
+        });
+        hideSpinner();
+    }
 }
 
 
@@ -35124,7 +35159,7 @@ function saveJobContent(jobId, jobContent){
         success: function (currentResponse) {
             //processCurrent(currentResponse);
         }
-    })
+    });
     hideSpinner();
 }
 
