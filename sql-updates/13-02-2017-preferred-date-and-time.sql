@@ -1,0 +1,1 @@
+ALTER TABLE `job` ADD `job_preferred_date_time` DATETIME NULL DEFAULT NULL AFTER `job_deleted`;
