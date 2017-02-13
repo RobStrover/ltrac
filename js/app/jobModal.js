@@ -149,7 +149,7 @@ function buildJobModal(singleResponse){
 		var jobMaterialFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobMaterial","text":"Material"}),jobMaterial);
 
 		var jobPrice = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPrice","class":"form-control jobModalField","data-dbvar":"job_price","disabled":"disabled","type":"number","value":jobData.job_price});
-		var jobPriceFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPrice","text":"Price (£) inc VAT"}),jobPrice);
+		var jobPriceFormGroup = getTag("<div/>",{"class":"form-group col-sm-4"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPrice","text":"Price (£) exc VAT"}),jobPrice);
 
     var jobPaymentTermsNumber = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobPaymentTermsNumber","class":"form-control jobModalField","data-dbvar":"job_payment_terms_number","disabled":"disabled","type":"number","value":jobData.job_payment_terms_number});
     var jobPaymentTermsNumberFormGroup = getTag("<div/>",{"class":"form-group col-sm-4 col-xs-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobPaymentTermsNumber","text":"Payment Expected After"}),jobPaymentTermsNumber);
