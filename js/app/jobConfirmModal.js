@@ -135,6 +135,7 @@ function buildJobConfirmModal(operation, job_id, message) {
             },
             success: function () {
                 confirmModalParent.modal('hide');
+                $('#jobModal'+job_id).modal('hide');
                 refreshCurrent();
             }
         });
