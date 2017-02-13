@@ -191,7 +191,7 @@ function buildJobModal(singleResponse){
 
 	jobModalDeleteButton.on("click", function(e){
 		var jobToDelete = jobModalDeleteButton.data("jobid");
-		buildJobConfirmModal("delete", jobToDelete, "Are you sure you want to delete this job? This cannot be undone.");
+		buildJobConfirmModal("delete", jobToDelete, "WARNING", "Are you sure you want to delete this job? This cannot be undone.");
 	});
 
 	var confirmModalConfirmButtonIcon = getTag("<span/>",{

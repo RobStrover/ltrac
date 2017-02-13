@@ -1,26 +1,31 @@
 
-function buildJobConfirmModal(operation, job_id, message) {
+function buildJobConfirmModal(operation, job_id, title, message) {
 
     if(!operation || !job_id) {
         return;
     }
+
+    title = title || "Message";
 
     message = message || "Are you sure?";
 
     var buttonType;
     var buttonText;
     var buttonIcon;
+    var titleIcon;
 
     switch(operation) {
         case 'delete':
             buttonType = 'danger';
             buttonText = 'Delete';
             buttonIcon = 'glyphicon-trash';
+            titleIcon = 'glyphicon-warning-sign';
             break;
         default:
             buttonType = 'primary';
             buttonText = 'Confirm';
             buttonIcon = 'glyphicon-ok';
+            titleIcon = 'glyphicon-envelope';
     }
 
     var confirmModalParent = getTag("<div/>",{
@@ -42,7 +47,7 @@ function buildJobConfirmModal(operation, job_id, message) {
     /*___________________________________________*/
 
     var confirmModalBody = getTag("<div/>",{
-        "class":"modal-body row"
+        "class":"modal-body"
     });
 
     /*___________________________________________*/
@@ -53,6 +58,20 @@ function buildJobConfirmModal(operation, job_id, message) {
 
     var confirmModalRow = getTag("<div/>",{
        "class":"row"
+    });
+
+    var confirmModalTitleParent = getTag("<div/>",{
+        "class":"col-xs-12"
+    });
+
+    var confirmModalTitle = getTag("<p/>",{
+        "class":"lead text-center",
+        "text":' '+title
+    });
+
+    var confirmModalTitleIcon = getTag("<span/>",{
+        "class":"glyphicon "+titleIcon,
+        "aria-hidden":"true"
     });
 
     var confirmModalMessageParent = getTag("<div/>",{
@@ -91,6 +110,9 @@ function buildJobConfirmModal(operation, job_id, message) {
     });
 
     confirmModalBody.append(confirmModalRow);
+    confirmModalTitle.prepend(confirmModalTitleIcon);
+    confirmModalTitleParent.append(confirmModalTitle);
+    confirmModalRow.append(confirmModalTitleParent);
     confirmModalRow.append(confirmModalMessageParent);
     confirmModalMessageParent.append(confirmModalMessage);
     confirmModalRow.append(confirmModalCancelButtonParent);
