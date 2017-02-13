@@ -1,6 +1,6 @@
 function autoRefresh() {
 	refreshCurrent();
-	setTimeout(function() { autoRefresh(); }, 20000);
+	setTimeout(function() { autoRefresh(); }, (5 * 60000));
 }
 
 function refreshCurrent(){

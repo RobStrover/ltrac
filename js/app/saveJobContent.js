@@ -12,7 +12,7 @@ function saveJobContent(jobId, jobContent){
         success: function (currentResponse) {
             //processCurrent(currentResponse);
         }
-    })
+    });
     hideSpinner();
 }
 

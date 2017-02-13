@@ -1,0 +1,1 @@
+ALTER TABLE `job` ADD `job_deleted` TINYINT(1) NOT NULL DEFAULT '0' AFTER `job_site_address_postcode`;

@@ -13,7 +13,7 @@ class GetJobSingle
     {
         $DbConnection = new Connection();
         if(null !== $DbConnection->connection) {
-            $jobQuery = sprintf("SELECT * FROM job WHERE job_id = '%d'", $jobId);
+            $jobQuery = sprintf("SELECT * FROM job WHERE job_id = '%d' AND job_deleted = '0'", $jobId);
             $result = $DbConnection->connection->query($jobQuery);
             $singleJob = mysqli_fetch_all($result,MYSQLI_ASSOC);
             return $singleJob;

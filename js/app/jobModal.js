@@ -8,7 +8,6 @@ $('body').on('click', '#modalEditButton', function(e){
 	e.preventDefault();
 	makeEditable('.jobModalField');
 	var jobId = $(this).attr('data-job');
-	//var saveButton = buildNode('button', {'id':'modalSaveButton', 'type':'button', 'data-job':jobId, 'class':'btn btn-primary', 'text':'Save'});
 		var saveButton = $(
 			"<button/>", {
 				"id":"modalSaveButton",
@@ -183,26 +182,54 @@ function buildJobModal(singleResponse){
         var jobSiteAddressPostcode = getTag("<input/>",{"id":"jobModal"+jobData.job_id+"JobSitePostcode", "class":"form-control jobModalField", "data-dbvar":"job_site_address_postcode", "disabled":"disabled", "type":"text", "value":jobData.job_site_address_postcode});
         var jobSiteAddressPostcodeFormGroup = getTag("<div/>",{"class":"form-group col-sm-6"}).append(getTag("<label/>",{"for":"jobModal"+jobData.job_id+"JobSiteAddressPostcode","text":"Site Address Postcode"}),jobSiteAddressPostcode);
 
+	var jobModalDeleteButton = getTag("<button/>",{
+		"id":"jobModal"+jobData.job_id+"DeleteJobButton",
+		"data-jobid":jobData.job_id,
+		"class":"btn btn-danger",
+		"text":"Delete Job "
+	});
+
+	jobModalDeleteButton.on("click", function(e){
+		var jobToDelete = jobModalDeleteButton.data("jobid");
+		buildJobConfirmModal("delete", jobToDelete, "Are you sure you want to delete this job? This cannot be undone.");
+	});
+
+	var confirmModalConfirmButtonIcon = getTag("<span/>",{
+		"class":"glyphicon glyphicon-trash",
+		"aria-hidden":"true"
+	});
+
+	var jobModalDeleteButtonFormGroup = getTag("<div/>",{
+		"class":"col-xs-6"
+	}).append(
+		jobModalDeleteButton.append(
+			confirmModalConfirmButtonIcon
+		)
+	);
+
 		jobModalTabButtons = getTag("<ul/>",{"class":"nav nav-tabs","role":"tablist"});
 		jobModalTabButtonBasicInfo = getTag("<li/>",{"role":"presentation","class":"active"}).append(getTag("<a/>",{"href":"#basic-info","aria-controls":"Basic Info","role":"tab","data-toggle":"tab","text":"Basic Info"}));
 		jobModalTabButtonSiteInfo = getTag("<li/>",{"role":"presentation"}).append(getTag("<a/>",{"href":"#site-details","aria-controls":"Site Details","role":"tab","data-toggle":"tab","text":"Site Details"}));
 		jobModalTabButtonClientInfo = getTag("<li/>",{"role":"presentation"}).append(getTag("<a/>",{"href":"#client-details","aria-controls":"Client Details","role":"tab","data-toggle":"tab","text":"Client Details"}));
 		jobModalTabButtonFiles = getTag("<li/>",{"role":"presentation"}).append(getTag("<a/>",{"href":"#files","aria-controls":"Files","role":"tab","data-toggle":"tab","text":"Files"}));
 		jobModalTabButtonMap = getTag("<li/>",{"role":"presentation"}).append(getTag("<a/>",{"href":"#map","aria-controls":"Map","role":"tab","data-toggle":"tab","text":"Map"}));
-		jobModalTabButtons.append(jobModalTabButtonBasicInfo, jobModalTabButtonSiteInfo, jobModalTabButtonClientInfo, jobModalTabButtonFiles, jobModalTabButtonMap);
+		jobModalTabButtonActions = getTag("<li/>",{"role":"presentation"}).append(getTag("<a/>",{"href":"#actions","aria-controls":"Actions","role":"tab","data-toggle":"tab","text":"Actions"}));
+		jobModalTabButtons.append(jobModalTabButtonBasicInfo, jobModalTabButtonSiteInfo, jobModalTabButtonClientInfo, jobModalTabButtonFiles, jobModalTabButtonMap, jobModalTabButtonActions);
 
 		jobModalTabPanelBasicInfo = getTag("<div/>",{"role":"tabpanel","class":"tab-pane active","id":"basic-info"});
 		jobModalTabPanelSiteInfo = getTag("<div/>",{"role":"tabpanel","class":"tab-pane","id":"site-details"});
 		jobModalTabPanelClientInfo = getTag("<div/>",{"role":"tabpanel","class":"tab-pane","id":"client-details"});
 		jobModalTabPanelFiles = getTag("<div/>",{"role":"tabpanel","class":"tab-pane","id":"files"});
 		jobModalTabPanelMap = getTag("<div/>",{"role":"tabpanel","class":"tab-pane","id":"map"});
+		jobModalTabPanelActions = getTag("<div/>",{"role":"tabpanel","class":"tab-pane","id":"actions"});
 
 		jobModalTabPanels = getTag("<div/>",{"class":"tab-content"}).append(
 			jobModalTabPanelBasicInfo,
 			jobModalTabPanelSiteInfo,
 			jobModalTabPanelClientInfo,
 			jobModalTabPanelFiles,
-			jobModalTabPanelMap
+			jobModalTabPanelMap,
+			jobModalTabPanelActions
 			);
 
 		jobModalTabPanelBasicInfo.append(
@@ -241,6 +268,10 @@ function buildJobModal(singleResponse){
 		} else {
 			jobModalTabPanelMap.append(getTag("<p/>",{"class":"text-center","text":"Add a site address postcode to see directions."}));
 		}
+
+		jobModalTabPanelActions.append(
+			jobModalDeleteButtonFormGroup
+		);
 
 
 		modalBody.append(jobModalTabButtons, jobModalTabPanels);
