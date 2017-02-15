@@ -162,6 +162,11 @@ function buildJobModal(singleResponse){
 		"class":"form-group col-sm-4"
 	});
 
+    jobPurchaseOrderNumberFormGroup.append(getTag("<label/>",{
+        "for":"jobModal"+jobData.job_id+"JobPurchaseOrderNumber",
+        "text":"Purchase Order Number"
+    }));
+
 	jobPurchaseOrderNumberFormGroup.append(getTag("<input/>",{
 		"id":"jobModal"+jobData.job_id+"JobPurchaseOrderNumber",
 		"class":"form-control jobModalField",
@@ -169,11 +174,6 @@ function buildJobModal(singleResponse){
 		"type":"text",
 		"data-dbvar":"job_purchase_order_number",
 		"value":jobData.job_purchase_order_number
-	}));
-
-	jobPurchaseOrderNumberFormGroup.append(getTag("<label/>",{
-		"for":"jobModal"+jobData.job_id+"JobPurchaseOrderNumber",
-		"text":"Purchase Order Number"
 	}));
 
 
