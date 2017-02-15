@@ -35384,6 +35384,7 @@ function buildJobModal(singleResponse){
     // Add Client Details Items
 
 	jobModalTabPanelClientDetails.append(
+        jobStatusSelectBoxFormGroup,
         jobNameFormGroup,
         jobPurchaseOrderNumberFormGroup,
         '<div class="col-sm-12"><hr></div>',
