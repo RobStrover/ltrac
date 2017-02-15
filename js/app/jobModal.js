@@ -363,6 +363,23 @@ function buildJobModal(singleResponse){
 
 
 
+	// Job Preferred Time
+
+	var jobPreferredDateTime = getTag("<input/>",{
+		"id":"jobModal"+jobData.job_id+"JobPreferredDateTime",
+		"class":"form-control jobModalField",
+		"data-dbvar":"job_preferred_date_time",
+		"disabled":"disabled",
+        "value":jobData.job_preferred_date_time
+	});
+
+	var jobPreferredDateTimeFormGroup = getTag("<div/>",{
+		"class":"form-group col-sm-6"}).append(getTag("<label/>",{
+		"for":"jobModal"+jobData.job_id+"JobPreferredDateTime",
+		"text":"Preferred Date and Time"}),jobPreferredDateTime);
+
+
+
     // Job Description
 
     var jobDescription = getTag("<textarea/>",{
@@ -528,6 +545,7 @@ function buildJobModal(singleResponse){
         jobSiteAddressTownFormGroup,
         jobSiteAddressCityFormGroup,
         jobSiteAddressPostcodeFormGroup,
+		jobPreferredDateTimeFormGroup,
         '<div class="col-sm-12"><hr></div>',
         jobDescriptionFormGroup,
         jobSurfaceTypeFormGroup,
@@ -583,6 +601,11 @@ function buildJobModal(singleResponse){
 	.on('hidden.bs.modal', function (e) {
 		setTimeout(refreshCurrent(), 0);
 	});
+
+    jobPreferredDateTime.datetimepicker({
+        format: 'DD / MM / YYYY - HH:mm'
+    });
+
 }
 
 function removeNode(target){
