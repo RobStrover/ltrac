@@ -1,5 +1,6 @@
 @import url("lib/bootstrap.min.css");
 @import url("lib/animate.css");
+@import url("lib/bootstrap-datetime-picker.min.css");
 
 body {
 	margin-top: 70px;

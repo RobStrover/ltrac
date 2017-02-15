@@ -7,8 +7,10 @@ gulp.task('default', function() {
         'js/lib/jquery.js',
         'js/lib/bootstrap.min.js',
         'js/lib/typeahead.jquery.js',
-        'js/lib/jspdf.debug.js',
-        'js/lib/Chart.bundle.js',
+        // 'js/lib/jspdf.debug.js',
+        // 'js/lib/Chart.bundle.js',
+        'js/lib/moment.js',
+        'js/lib/bootstrap-datetime-picker.js',
         'js/app/*.js'
     ])
         .pipe(concat('script.js'))
