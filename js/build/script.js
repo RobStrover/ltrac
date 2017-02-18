@@ -6923,10 +6923,6 @@ function buildJobModal(singleResponse){
 		setTimeout(refreshCurrent(), 0);
 	});
 
-    jobPreferredDateTime.datetimepicker({
-        format: 'DD / MM / YYYY - HH:mm'
-    });
-
 }
 
 function removeNode(target){
