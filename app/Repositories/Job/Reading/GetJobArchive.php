@@ -12,7 +12,7 @@ class GetJobArchive
     public function getArchiveJobs() {
         $DbConnection = new Connection();
         if(null !== $DbConnection->connection) {
-            $jobQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'Yes' ORDER BY job_id DESC");
+            $jobQuery = sprintf("SELECT job_id, job_name, job_status FROM job WHERE job_archived = 'Yes' AND job_deleted = '0' ORDER BY job_id DESC");
             $result = $DbConnection->connection->query($jobQuery);
             $archiveJobs = mysqli_fetch_all($result,MYSQLI_ASSOC);
             return $archiveJobs;
