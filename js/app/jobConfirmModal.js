@@ -15,6 +15,12 @@ function buildJobConfirmModal(operation, job_id, title, message) {
     var titleIcon;
 
     switch(operation) {
+        case "archive":
+            buttonType = 'warning';
+            buttonText = 'Confirm';
+            buttonIcon = 'glyphicon-folder-open';
+            titleIcon = 'glyphicon-folder-open';
+            break;
         case 'delete':
             buttonType = 'danger';
             buttonText = 'Delete';
@@ -137,7 +143,16 @@ function buildJobConfirmModal(operation, job_id, title, message) {
 
     confirmModalConfirmButton.on("click", function() {
         job_id = $(this).data("jobid");
-        deleteJob(job_id);
+        switch(operation) {
+            case 'archive':
+                archiveJob(job_id);
+                break;
+            case 'delete':
+                deleteJob(job_id);
+                break;
+            default:
+                break;
+        }
     });
 
     confirmModalCancelButton.on("click", function() {
@@ -153,6 +168,26 @@ function buildJobConfirmModal(operation, job_id, title, message) {
             url: "app/ajax_return.php",
             data: {
                 function: 'deleteJob',
+                jobId: job_id
+            },
+            success: function () {
+                confirmModalParent.modal('hide');
+                $('#jobModal'+job_id).modal('hide');
+                refreshCurrent();
+            }
+        });
+        hideSpinner();
+    }
+
+    function archiveJob(job_id){
+
+        showSpinner();
+        $.ajax({
+            type: 'POST',
+            dataType: "text",
+            url: "app/ajax_return.php",
+            data: {
+                function: 'archiveJob',
                 jobId: job_id
             },
             success: function () {

@@ -7,6 +7,7 @@ use \Repositories\Job\Writing\FilterContent as FilterContent;
 use \Repositories\Job\Writing\AddJob as AddJob;
 use \Repositories\Job\Writing\SaveJob as SaveJob;
 use \Repositories\Job\Writing\DeleteJob as DeleteJob;
+use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 
 require_once 'start.php';
 
@@ -40,6 +41,13 @@ if(array_key_exists('function',$_POST)){
             $jobId = filter_input(INPUT_POST, 'jobId', FILTER_SANITIZE_NUMBER_INT);
             $DeleteJob = new DeleteJob();
             if($DeleteJob->deleteJob($jobId)){
+                return true;
+            }
+            break;
+        case 'archiveJob':
+            $jobId = filter_input(INPUT_POST, 'jobId', FILTER_SANITIZE_NUMBER_INT);
+            $ArchiveJob = new ArchiveJob();
+            if($ArchiveJob->archiveJob($jobId)){
                 return true;
             }
             break;

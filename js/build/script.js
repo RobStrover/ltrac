@@ -6168,6 +6168,12 @@ function buildJobConfirmModal(operation, job_id, title, message) {
     var titleIcon;
 
     switch(operation) {
+        case "archive":
+            buttonType = 'warning';
+            buttonText = 'Confirm';
+            buttonIcon = 'glyphicon-folder-open';
+            titleIcon = 'glyphicon-folder-open';
+            break;
         case 'delete':
             buttonType = 'danger';
             buttonText = 'Delete';
@@ -6290,7 +6296,16 @@ function buildJobConfirmModal(operation, job_id, title, message) {
 
     confirmModalConfirmButton.on("click", function() {
         job_id = $(this).data("jobid");
-        deleteJob(job_id);
+        switch(operation) {
+            case 'archive':
+                archiveJob(job_id);
+                break;
+            case 'delete':
+                deleteJob(job_id);
+                break;
+            default:
+                break;
+        }
     });
 
     confirmModalCancelButton.on("click", function() {
@@ -6306,6 +6321,26 @@ function buildJobConfirmModal(operation, job_id, title, message) {
             url: "app/ajax_return.php",
             data: {
                 function: 'deleteJob',
+                jobId: job_id
+            },
+            success: function () {
+                confirmModalParent.modal('hide');
+                $('#jobModal'+job_id).modal('hide');
+                refreshCurrent();
+            }
+        });
+        hideSpinner();
+    }
+
+    function archiveJob(job_id){
+
+        showSpinner();
+        $.ajax({
+            type: 'POST',
+            dataType: "text",
+            url: "app/ajax_return.php",
+            data: {
+                function: 'archiveJob',
                 jobId: job_id
             },
             success: function () {
@@ -6795,13 +6830,19 @@ function buildJobModal(singleResponse){
     var jobModalDeleteButton = getTag("<button/>",{
         "id":"jobModal"+jobData.job_id+"DeleteJobButton",
         "data-jobid":jobData.job_id,
-        "class":"btn btn-danger",
+        "class":"btn btn-danger btn-block",
         "text":"Delete Job "
     });
 
+	var jobModalDeleteButtonInstruction = getTag("<div/>",{
+		"class":"col-xs-12 col-sm-9 col-sm-push-3"
+	}).append(getTag("<p/>",{
+		"text":"Deleting a job will permanently remove it from all job lists and reporting. This cannot be reversed."
+	}));
+
     jobModalDeleteButton.on("click", function(e){
         var jobToDelete = jobModalDeleteButton.data("jobid");
-        buildJobConfirmModal("delete", jobToDelete, "WARNING", "Are you sure you want to delete this job? This cannot be undone.");
+        buildJobConfirmModal("delete", jobToDelete, "WARNING", "Are you sure you want to delete this job? This cannot be reversed.");
     });
 
     var confirmModalConfirmButtonIcon = getTag("<span/>",{
@@ -6810,12 +6851,47 @@ function buildJobModal(singleResponse){
     });
 
     var jobModalDeleteButtonFormGroup = getTag("<div/>",{
-        "class":"col-xs-6"
+        "class":"col-xs-12 col-sm-3 col-sm-pull-9"
     }).append(
         jobModalDeleteButton.append(
             confirmModalConfirmButtonIcon
         )
     );
+
+
+
+	// Archive Job Button
+
+	var jobModalArchiveButton = getTag("<button/>",{
+		"id":"jobModal"+jobData.job_id+"ArchiveJobButton",
+		"data-jobid":jobData.job_id,
+		"class":"btn btn-warning btn-block",
+		"text":"Archive Job "
+	});
+
+	var jobModalArchiveButtonInstruction = getTag("<div/>",{
+		"class":"col-xs-12 col-sm-9 col-sm-push-3"
+	}).append(getTag("<p/>",{
+		"text":"An archived job is moved to the archive folder and is still reflected in reporting."
+	}));
+
+	jobModalArchiveButton.on("click", function(e){
+		var jobToArchive = jobModalArchiveButton.data("jobid");
+		buildJobConfirmModal("archive", jobToArchive, "Are You Sure?", "Are you sure you want to archive this job?");
+	});
+
+	var confirmModalArchiveConfirmButtonIcon = getTag("<span/>",{
+		"class":"glyphicon glyphicon-folder-open",
+		"aria-hidden":"true"
+	});
+
+	var jobModalArchiveButtonFormGroup = getTag("<div/>",{
+		"class":"col-xs-12 col-sm-3 col-sm-pull-9"
+	}).append(
+		jobModalArchiveButton.append(
+			confirmModalArchiveConfirmButtonIcon
+		)
+	);
 
 
     // Tab Buttons
@@ -6881,6 +6957,10 @@ function buildJobModal(singleResponse){
     // Add Actions Items
 
     jobModalTabPanelActions.append(
+    	jobModalArchiveButtonInstruction,
+		jobModalArchiveButtonFormGroup,
+		'<div class="col-sm-12"><hr></div>',
+    	jobModalDeleteButtonInstruction,
         jobModalDeleteButtonFormGroup
     );
 
