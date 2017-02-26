@@ -6534,6 +6534,15 @@ function buildJobModal(singleResponse){
 
 
 
+	// Client Details Parent
+
+	var jobClientDetailsParent = getTag("<div/>",{
+		"id":"jobModal"+jobData.job_id+"JobClientDetailsParent",
+		"class":"col-sm-12"
+	});
+
+
+
 	// Job Status Select
 
 	var jobStatusSelectBox = getTag("<select/>",{
@@ -6926,6 +6935,7 @@ function buildJobModal(singleResponse){
         jobNameFormGroup,
         jobPurchaseOrderNumberFormGroup,
         '<div class="col-sm-12"><hr></div>',
+		jobClientDetailsParent,
         '<div class="col-sm-12"><hr></div>',
         jobPriceFormGroup,
         jobPaymentTermsNumberFormGroup,
@@ -7003,37 +7013,6 @@ function buildJobModal(singleResponse){
 		setTimeout(refreshCurrent(), 0);
 	});
 
-}
-
-function removeNode(target){
-	$(target).remove();
-}
-
-function getOptionTag(value, label, selected) {
-	var optionTag = $(
-		"<option/>",{
-			"value":value,
-			"text":label
-		});
-	if(value == selected) {
-		optionTag.attr('selected','selected');
-	}
-	return optionTag;
-}
-
-function getLabel(target, label) {
-	return $(
-		"<label/>",{
-			"for":target,
-			"text":label
-		})
-}
-
-function getTag(type, attributes) {
-	return $(
-		type,
-			attributes
-		)
 }
 function saveJobContent(jobId, jobContent){
     showSpinner();
@@ -7155,3 +7134,33 @@ $('#ltrac-search .typeahead').typeahead({
       name: 'states',
       source: substringMatcher(states)
     });
+function removeNode(target){
+    $(target).remove();
+}
+
+function getOptionTag(value, label, selected) {
+    var optionTag = $(
+        "<option/>",{
+            "value":value,
+            "text":label
+        });
+    if(value == selected) {
+        optionTag.attr('selected','selected');
+    }
+    return optionTag;
+}
+
+function getLabel(target, label) {
+    return $(
+        "<label/>",{
+            "for":target,
+            "text":label
+        })
+}
+
+function getTag(type, attributes) {
+    return $(
+        type,
+        attributes
+    )
+}
