@@ -18,6 +18,11 @@ return array(
     'Repositories\\Job\\Reading\\GetJobArchive' => $baseDir . '/app/Repositories/Job/Reading/GetJobArchive.php',
     'Repositories\\Job\\Reading\\GetJobCurrent' => $baseDir . '/app/Repositories/Job/Reading/GetJobCurrent.php',
     'Repositories\\Job\\Reading\\GetJobSingle' => $baseDir . '/app/Repositories/Job/Reading/GetJobSingle.php',
+    'Repositories\\Job\\Reading\\GetProprietorSingle' => $baseDir . '/app/Repositories/Proprietor/Reading/GetProprietorSingle.php',
+    'Repositories\\Job\\Writing\\AddJob' => $baseDir . '/app/Repositories/Job/Writing/AddJob.php',
+    'Repositories\\Job\\Writing\\ArchiveJob' => $baseDir . '/app/Repositories/Job/Writing/ArchiveJob.php',
+    'Repositories\\Job\\Writing\\DeleteJob' => $baseDir . '/app/Repositories/Job/Writing/DeleteJob.php',
+    'Repositories\\Job\\Writing\\FilterContent' => $baseDir . '/app/Repositories/Job/Writing/FilterContent.php',
     'Repositories\\Job\\Writing\\SaveJob' => $baseDir . '/app/Repositories/Job/Writing/SaveJob.php',
     'Repositories\\Login\\Authenticate\\UserAuthentication' => $baseDir . '/app/Repositories/Login/Authenticate/UserAuthentication.php',
 );

@@ -8,6 +8,7 @@ use \Repositories\Job\Writing\AddJob as AddJob;
 use \Repositories\Job\Writing\SaveJob as SaveJob;
 use \Repositories\Job\Writing\DeleteJob as DeleteJob;
 use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
+use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
 
 require_once 'start.php';
 
@@ -50,6 +51,14 @@ if(array_key_exists('function',$_POST)){
             if($ArchiveJob->archiveJob($jobId)){
                 return true;
             }
+            break;
+        case 'getSingleProprietorDetails':
+            $job_id = filter_input(INPUT_POST, 'jobId', FILTER_SANITIZE_NUMBER_INT);
+            $ProprietorSingle
+            break;
+        default:
+            getError('no function requested');
+            exit();
             break;
     }
 

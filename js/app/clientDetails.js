@@ -5,7 +5,7 @@ function initClientDetails(job_id) {
         dataType: "json",
         url: "app/ajax_return.php",
         data: {
-            function: 'getClient',
+            function: 'getSingleProprietorDetails',
             jobId: job_id
         },
         success: function () {
