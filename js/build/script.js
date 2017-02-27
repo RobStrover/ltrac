@@ -6151,6 +6151,23 @@ var jobsList = $('.jobs-list');
 if(jobsList.length > 0) {
 	autoRefresh();
 }
+function initClientDetails(job_id) {
+    console.log('here');
+    showSpinner();
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        url: "app/ajax_return.php",
+        data: {
+            function: 'getSingleProprietorDetails',
+            jobId: job_id
+        },
+        success: function () {
+
+        }
+    });
+    hideSpinner();
+}
 
 function buildJobConfirmModal(operation, job_id, title, message) {
 
@@ -7005,6 +7022,7 @@ function buildJobModal(singleResponse){
 	jobModalDialog.append(jobModalContent);
 	jobModalParent.append(jobModalDialog);
 	$('body').append(jobModalParent);
+	initClientDetails(jobData.job_id);
 	$('#jobModal'+jobData.job_id).modal({
 		backdrop: 'static',
 		keyboard: 'true'

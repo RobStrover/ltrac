@@ -1,4 +1,5 @@
 function initClientDetails(job_id) {
+    console.log('here');
     showSpinner();
     $.ajax({
         type: 'POST',

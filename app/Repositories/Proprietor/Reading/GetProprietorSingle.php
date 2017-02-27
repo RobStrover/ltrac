@@ -1,4 +1,4 @@
-<?php namespace Repositories\Job\Reading;
+<?php namespace Repositories\Proprietor\Reading;
 
 use Repositories\Db\Connection\GetConnection as Connection;
 
@@ -13,10 +13,10 @@ class GetProprietorSingle
         $DbConnection = new Connection();
         if(null !== $DbConnection->connection) {
             $proprietorQuery = sprintf(
-                "SELECT p.* FROM p.proprietor" .
-                "INNER JOIN j.job" .
-                "ON p.proprietor_id = j.job_proprietor_id" .
-                "WHERE j.job_id = '%d';"
+                "SELECT * FROM proprietor" .
+                " INNER JOIN job" .
+                " ON proprietor.proprietor_id = job.job_proprietor_id" .
+                " WHERE job.job_id = '%d';"
             , $job_id
             );
             $result = $DbConnection->connection->query($proprietorQuery);

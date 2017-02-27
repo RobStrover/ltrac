@@ -54,7 +54,9 @@ if(array_key_exists('function',$_POST)){
             break;
         case 'getSingleProprietorDetails':
             $job_id = filter_input(INPUT_POST, 'jobId', FILTER_SANITIZE_NUMBER_INT);
-            $ProprietorSingle
+            $GetProprietorSingle = new GetProprietorSingle();
+            $proprietorDetails = $GetProprietorSingle->getSingleProprietorDetails($job_id);
+                returnJson($proprietorDetails);
             break;
         default:
             getError('no function requested');
