@@ -13,7 +13,11 @@ function refreshCurrent(){
 		url: "app/ajax_return.php",
 		data: "data=current",
 		success: function (currentResponse) {
-			processCurrent(currentResponse);
+            showSpinner();
+            setTimeout(function(){
+                processCurrent(currentResponse);
+            },0);
+
 		}
 	});
 }
@@ -24,7 +28,6 @@ function processCurrent(currentResponse){
 	showSpinner();
 	removeUpdatedFlag();
 	currentResponse.forEach(function(job){
-
 if($('#job-'+job.job_id).length > 0) {
 		updateJob(job);
 	} else {
@@ -36,7 +39,7 @@ if($('#job-'+job.job_id).length > 0) {
 		//setTimeout(function(){
 		//	console.log(job);
 		//},0);
-	})
+	});
 	removeNonUpdated();
 	hideSpinner();
 }

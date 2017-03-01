@@ -5860,8 +5860,13 @@ if(addJobButton.length > 0) {
 
 function registerAddJobButton(addJobButton) {
     addJobButton.on('click', function(e){
-        e.preventDefault();
-        registerNewJob();
+        showSpinner();
+        setTimeout(function(){
+            e.preventDefault();
+            registerNewJob();
+        },0);
+
+
     });
 }
 
@@ -5872,7 +5877,7 @@ function registerNewJob() {
         dataType: "json",
         url: "app/ajax_return.php",
         data: {
-            function: 'addJob',
+            function: 'addJob'
         },
         success: function (singleResponse) {
             processSingleResponse(singleResponse);
@@ -6018,7 +6023,11 @@ function refreshCurrent(){
 		url: "app/ajax_return.php",
 		data: "data=current",
 		success: function (currentResponse) {
-			processCurrent(currentResponse);
+            showSpinner();
+            setTimeout(function(){
+                processCurrent(currentResponse);
+            },0);
+
 		}
 	});
 }
@@ -6029,7 +6038,6 @@ function processCurrent(currentResponse){
 	showSpinner();
 	removeUpdatedFlag();
 	currentResponse.forEach(function(job){
-
 if($('#job-'+job.job_id).length > 0) {
 		updateJob(job);
 	} else {
@@ -6041,7 +6049,7 @@ if($('#job-'+job.job_id).length > 0) {
 		//setTimeout(function(){
 		//	console.log(job);
 		//},0);
-	})
+	});
 	removeNonUpdated();
 	hideSpinner();
 }
@@ -6374,9 +6382,12 @@ function buildJobConfirmModal(operation, job_id, title, message) {
 
 
 $('.jobs-list').on('click', '.job-link', function(e){
+	showSpinner();
 	e.preventDefault();
 	var jobId = $(this).attr('data-job');
-	setTimeout(getJobData(jobId), 0);
+	setTimeout(function(){
+		getJobData(jobId);
+	},0);
 });
 
 $('body').on('click', '#modalEditButton', function(e){
@@ -6435,9 +6446,12 @@ function getJobData(jobId){
 		url: "app/ajax_return.php",
 		data: "data=single&jobid="+jobId,
 		success: function (singleResponse) {
-			processSingleResponse(singleResponse);
+			showSpinner();
+			setTimeout(function(){
+				processSingleResponse(singleResponse);
+			},0);
 		}
-	})
+	});
 	hideSpinner();
 }
 
