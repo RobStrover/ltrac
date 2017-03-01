@@ -6,8 +6,13 @@ if(addJobButton.length > 0) {
 
 function registerAddJobButton(addJobButton) {
     addJobButton.on('click', function(e){
-        e.preventDefault();
-        registerNewJob();
+        showSpinner();
+        setTimeout(function(){
+            e.preventDefault();
+            registerNewJob();
+        },0);
+
+
     });
 }
 
@@ -18,7 +23,7 @@ function registerNewJob() {
         dataType: "json",
         url: "app/ajax_return.php",
         data: {
-            function: 'addJob',
+            function: 'addJob'
         },
         success: function (singleResponse) {
             processSingleResponse(singleResponse);

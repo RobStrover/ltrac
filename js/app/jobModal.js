@@ -1,7 +1,10 @@
 $('.jobs-list').on('click', '.job-link', function(e){
+	showSpinner();
 	e.preventDefault();
 	var jobId = $(this).attr('data-job');
-	setTimeout(getJobData(jobId), 0);
+	setTimeout(function(){
+		getJobData(jobId);
+	},0);
 });
 
 $('body').on('click', '#modalEditButton', function(e){
@@ -60,9 +63,12 @@ function getJobData(jobId){
 		url: "app/ajax_return.php",
 		data: "data=single&jobid="+jobId,
 		success: function (singleResponse) {
-			processSingleResponse(singleResponse);
+			showSpinner();
+			setTimeout(function(){
+				processSingleResponse(singleResponse);
+			},0);
 		}
-	})
+	});
 	hideSpinner();
 }
 
