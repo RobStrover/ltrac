@@ -1,10 +1,13 @@
 function autoRefresh() {
-	refreshCurrent();
+    showSpinner();
+    setTimeout(function(){
+        refreshCurrent();
+        hideSpinner();
+    },0);
 	setTimeout(function() { autoRefresh(); }, (5 * 60000));
 }
 
 function refreshCurrent(){
-	showSpinner();
 	$.ajax({
 		dataType: "json",
 		url: "app/ajax_return.php",
@@ -13,7 +16,6 @@ function refreshCurrent(){
 			processCurrent(currentResponse);
 		}
 	});
-	hideSpinner();
 }
 
 
