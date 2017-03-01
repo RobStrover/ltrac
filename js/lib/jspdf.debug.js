@@ -12248,7 +12248,7 @@ Q\n";
   			return that.dstate.deflateSetDictionary(that, dictionary, dictLength);
   		},
 
-  		// Read a new buffer from the current input stream, update the
+  		// Reading a new buffer from the current input stream, update the
   		// total number of bytes read. All deflate() input goes through
   		// this function so some applications may wish to modify it to avoid
   		// allocating a large strm->next_in buffer and copying from it.

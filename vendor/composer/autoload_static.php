@@ -41,6 +41,11 @@ class ComposerStaticInit1e675be0973258a443359bf1ffc29630
         'Repositories\\Job\\Reading\\GetJobArchive' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJobArchive.php',
         'Repositories\\Job\\Reading\\GetJobCurrent' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJobCurrent.php',
         'Repositories\\Job\\Reading\\GetJobSingle' => __DIR__ . '/../..' . '/app/Repositories/Job/Reading/GetJobSingle.php',
+        'Repositories\\Job\\Reading\\GetProprietorSingle' => __DIR__ . '/../..' . '/app/Repositories/Proprietor/Reading/GetProprietorSingle.php',
+        'Repositories\\Job\\Writing\\AddJob' => __DIR__ . '/../..' . '/app/Repositories/Job/Writing/AddJob.php',
+        'Repositories\\Job\\Writing\\ArchiveJob' => __DIR__ . '/../..' . '/app/Repositories/Job/Writing/ArchiveJob.php',
+        'Repositories\\Job\\Writing\\DeleteJob' => __DIR__ . '/../..' . '/app/Repositories/Job/Writing/DeleteJob.php',
+        'Repositories\\Job\\Writing\\FilterContent' => __DIR__ . '/../..' . '/app/Repositories/Job/Writing/FilterContent.php',
         'Repositories\\Job\\Writing\\SaveJob' => __DIR__ . '/../..' . '/app/Repositories/Job/Writing/SaveJob.php',
         'Repositories\\Login\\Authenticate\\UserAuthentication' => __DIR__ . '/../..' . '/app/Repositories/Login/Authenticate/UserAuthentication.php',
     );

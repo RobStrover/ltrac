@@ -6004,12 +6004,15 @@ function addArchivedJob(jobData){
 	return;
 }
 function autoRefresh() {
-	refreshCurrent();
+    showSpinner();
+    setTimeout(function(){
+        refreshCurrent();
+        hideSpinner();
+    },0);
 	setTimeout(function() { autoRefresh(); }, (5 * 60000));
 }
 
 function refreshCurrent(){
-	showSpinner();
 	$.ajax({
 		dataType: "json",
 		url: "app/ajax_return.php",
@@ -6018,7 +6021,6 @@ function refreshCurrent(){
 			processCurrent(currentResponse);
 		}
 	});
-	hideSpinner();
 }
 
 
@@ -6150,6 +6152,23 @@ var jobsList = $('.jobs-list');
 
 if(jobsList.length > 0) {
 	autoRefresh();
+}
+function initClientDetails(job_id) {
+    console.log('here');
+    showSpinner();
+    // $.ajax({
+    //     type: 'POST',
+    //     dataType: "json",
+    //     url: "app/ajax_return.php",
+    //     data: {
+    //         function: 'getSingleProprietorDetails',
+    //         jobId: job_id
+    //     },
+    //     success: function () {
+    //
+    //     }
+    // });
+    hideSpinner();
 }
 
 function buildJobConfirmModal(operation, job_id, title, message) {
@@ -6531,6 +6550,15 @@ function buildJobModal(singleResponse){
 		"data-dbvar":"job_purchase_order_number",
 		"value":jobData.job_purchase_order_number
 	}));
+
+
+
+	// Client Details Parent
+
+	var jobClientDetailsParent = getTag("<div/>",{
+		"id":"jobModal"+jobData.job_id+"JobClientDetailsParent",
+		"class":"col-sm-12"
+	});
 
 
 
@@ -6926,6 +6954,7 @@ function buildJobModal(singleResponse){
         jobNameFormGroup,
         jobPurchaseOrderNumberFormGroup,
         '<div class="col-sm-12"><hr></div>',
+		jobClientDetailsParent,
         '<div class="col-sm-12"><hr></div>',
         jobPriceFormGroup,
         jobPaymentTermsNumberFormGroup,
@@ -6995,6 +7024,7 @@ function buildJobModal(singleResponse){
 	jobModalDialog.append(jobModalContent);
 	jobModalParent.append(jobModalDialog);
 	$('body').append(jobModalParent);
+	initClientDetails(jobData.job_id);
 	$('#jobModal'+jobData.job_id).modal({
 		backdrop: 'static',
 		keyboard: 'true'
@@ -7003,37 +7033,6 @@ function buildJobModal(singleResponse){
 		setTimeout(refreshCurrent(), 0);
 	});
 
-}
-
-function removeNode(target){
-	$(target).remove();
-}
-
-function getOptionTag(value, label, selected) {
-	var optionTag = $(
-		"<option/>",{
-			"value":value,
-			"text":label
-		});
-	if(value == selected) {
-		optionTag.attr('selected','selected');
-	}
-	return optionTag;
-}
-
-function getLabel(target, label) {
-	return $(
-		"<label/>",{
-			"for":target,
-			"text":label
-		})
-}
-
-function getTag(type, attributes) {
-	return $(
-		type,
-			attributes
-		)
 }
 function saveJobContent(jobId, jobContent){
     showSpinner();
@@ -7155,3 +7154,33 @@ $('#ltrac-search .typeahead').typeahead({
       name: 'states',
       source: substringMatcher(states)
     });
+function removeNode(target){
+    $(target).remove();
+}
+
+function getOptionTag(value, label, selected) {
+    var optionTag = $(
+        "<option/>",{
+            "value":value,
+            "text":label
+        });
+    if(value == selected) {
+        optionTag.attr('selected','selected');
+    }
+    return optionTag;
+}
+
+function getLabel(target, label) {
+    return $(
+        "<label/>",{
+            "for":target,
+            "text":label
+        })
+}
+
+function getTag(type, attributes) {
+    return $(
+        type,
+        attributes
+    )
+}
