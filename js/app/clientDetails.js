@@ -17,24 +17,74 @@ function initClientDetails(job_id) {
 
         // Proprietor Name Search
 
-    var jobSiteAddressTown = getTag("<input/>", {
-        "id":"jobModal"+jobData.job_id+"JobProprietorName",
-        "class":"form-control jobModalField",
-        "data-dbvar":"job_site_address_town",
+    var jobProprietorName = getTag("<input/>", {
+        "id":"jobModal"+job_id+"JobProprietorName",
+        "class":"form-control",
         "disabled":"disabled",
         "type":"text",
-        "value":jobData.job_site_address_town
+        "value":""
     });
 
-    var jobSiteAddressTownFormGroup = getTag("<div/>", {
-        "class":"form-group col-sm-6"}).append(getTag("<label/>",{
-        'for':"jobModal"+jobData.job_id+"JobSiteAddressTown",
-        "text":"Site Address Town"}),jobSiteAddressTown);
+    var jobProprietorNameFormGroup = getTag("<div/>", {
+        "class":"form-group col-sm-12"}).append(getTag("<label/>",{
+        'for':"jobModal"+job_id+"JobProprietorName",
+        "text":"Company / Proprietor Name"}),jobProprietorName);
+
+
+    jobProprietorNameFormGroup.append(jobProprietorName);
 
 
 
-    $("#jobModal"+jobData.job_id+"JobClientDetailsParent").append(
+    // Job Proprietor Parent
 
+    var jobProrprietorParent = getTag("<div/>", {
+        "class":"col-sm-6"
+    });
+
+    var jobProprietorParentRow = getTag("<div/>", {
+        "class":"row"
+    });
+
+
+
+    // Job Contacts Parent
+
+    var jobContactsParent = getTag("<div/>", {
+        "class":"col-sm-6"
+    });
+
+    var jobContactsParentRow = getTag("<div/>", {
+        "class":"row"
+    });
+
+
+
+    jobProprietorParentRow.append(
+        getTag("<h3/>",{
+            "text":"Company / Proprietor"
+        }),
+        jobProprietorNameFormGroup
+    );
+
+    jobProrprietorParent.append(
+        jobProprietorParentRow
+    );
+
+
+
+    jobContactsParentRow.append(
+        getTag("<h3/>",{
+            "text":"Contacts"
+        })
+    );
+
+    jobContactsParent.append(
+        jobContactsParentRow
+    );
+
+    $("#jobModal"+job_id+"JobClientDetailsParent").append(
+        jobProrprietorParent,
+        jobContactsParent
         );
 
 }
