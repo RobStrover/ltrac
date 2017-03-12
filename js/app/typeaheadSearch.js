@@ -20,22 +20,28 @@ var substringMatcher = function(strs) {
   };
 };
 
-var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
-$('#ltrac-search .typeahead').typeahead({
+var searchJobs = [];
+
+var jobSearch = $('#ltrac-search .typeahead');
+jobSearch.typeahead({
       hint: true,
       highlight: true,
       minLength: 1
     },
     {
-      name: 'states',
-      source: substringMatcher(states)
+        order: "desc",
+      display: "job_name",
+      source: {
+            data: searchJobs
+      }
+
+        //substringMatcher(searchJobs)
     });
+
+jobSearch.bind('typeahead:select', function(ev, suggestion) {
+    console.log('Selection: ' + suggestion);
+});
+
+function addToSearch(jobData) {
+  searchJobs.push(jobData);
+}

@@ -32,6 +32,7 @@ if($('#job-'+job.job_id).length > 0) {
 		updateJob(job);
 	} else {
 			addJob(job);
+			addToSearch(job);
 		}
 
 
