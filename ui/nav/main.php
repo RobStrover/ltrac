@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <div class="navbar-left navbar-form">
         <div id="ltrac-search" class="form-group">
-          <input type="text" class="form-control typeahead" placeholder="Search">
+          <input type="text" data-placeholder="Job Search" id="nav-job-search" class="form-control typeahead" placeholder="Job Search">
         </div>
       </div>
       <ul class="nav navbar-nav">

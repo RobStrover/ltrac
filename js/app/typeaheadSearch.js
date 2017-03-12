@@ -1,47 +1,23 @@
-var substringMatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substringRegex;
-
-    // an array that will be populated with substring matches
-    matches = [];
-
-    // regex used to determine if a string contains the substring `q`
-    substrRegex = new RegExp(q, 'i');
-
-    // iterate through the pool of strings and for any string that
-    // contains the substring `q`, add it to the `matches` array
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        matches.push(str);
-      }
-    });
-
-    cb(matches);
-  };
-};
-
 var searchJobs = [];
+var jobSearchField = $("#nav-job-search");
 
-var jobSearch = $('#ltrac-search .typeahead');
-jobSearch.typeahead({
-      hint: true,
-      highlight: true,
-      minLength: 1
-    },
-    {
-        order: "desc",
-      display: "job_name",
-      source: {
-            data: searchJobs
-      }
-
-        //substringMatcher(searchJobs)
-    });
-
-jobSearch.bind('typeahead:select', function(ev, suggestion) {
-    console.log('Selection: ' + suggestion);
+jobSearchField.select2({
+    data: searchJobs
 });
 
 function addToSearch(jobData) {
-  searchJobs.push(jobData);
+  searchJobs.push(
+          {
+          id:parseInt(jobData.job_id),
+          text:jobData.job_id +  ' - ' + jobData.job_name
+      }
+  );
+    jobSearchField.select2({
+        data: searchJobs
+    });
 }
+
+jobSearchField.on('select2:select', function (evt) {
+    getJobData($('#nav-job-search').val());
+});
+
