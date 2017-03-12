@@ -11,6 +11,7 @@ gulp.task('default', function() {
         // 'js/lib/Chart.bundle.js',
         'js/lib/moment.js',
         'js/lib/bootstrap-datetime-picker.js',
+        'js/lib/select2.full.js',
         'js/app/*.js'
     ])
         .pipe(concat('script.js'))
