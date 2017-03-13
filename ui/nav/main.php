@@ -21,6 +21,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a href="#" id="add-job-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Job</a></li>
+        <li><a href="#" id="reporting-tab-btn"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reporting</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

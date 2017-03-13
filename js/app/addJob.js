@@ -5,10 +5,10 @@ if(addJobButton.length > 0) {
 }
 
 function registerAddJobButton(addJobButton) {
+    e.preventDefault();
     addJobButton.on('click', function(e){
         showSpinner();
         setTimeout(function(){
-            e.preventDefault();
             registerNewJob();
         },0);
 
