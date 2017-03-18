@@ -1,24 +1,31 @@
 var reportingTabButton = $('#reporting-tab-btn');
 
 if(reportingTabButton.length > 0) {
-    registerAddJobButton(reportingTabButton);
+    registerReportingButton(reportingTabButton);
 }
 
-function registerAddJobButton(reportingTabButton) {
+
+var mainNavigationItems = [
+    "jobs",
+    "reporting"
+];
+
+mainNavigationItems.forEach(function(navigationItem){
+    var navigationItemButton = $('#' + navigationItem + '-tab-btn');
+    if(navigationItemButton.length > 0) {
+        navigationItemButton.on('click', function(e){
+
+        })
+    }
+});
+
+
+function registerReportingButton(reportingTabButton) {
     reportingTabButton.on('click', function(e){
     	e.preventDefault();
         showSpinner();
         setTimeout(function(){
-            transitionOutJobs();
-            transitionInReporting();
+
         },0);
     });
-}
-
-function transitionOutJobs() {
-	$('#jobs-layout-parent').addClass("animated zoomOutLeft");
-}
-
-function transitionInReporting() {
-	$('#reporting-layout-parent').addClass("animated zoomInRight");
 }
