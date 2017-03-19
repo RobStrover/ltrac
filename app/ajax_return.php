@@ -9,6 +9,7 @@ use \Repositories\Job\Writing\SaveJob as SaveJob;
 use \Repositories\Job\Writing\DeleteJob as DeleteJob;
 use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
+use \Repositories\Reporting\CurrentJobsReport as CurrentJobsReport;
 
 require_once 'start.php';
 
@@ -85,6 +86,14 @@ if(array_key_exists('function',$_POST)){
             $GetJobArchive = new GetJobArchive();
             $archivedJobs = $GetJobArchive->getArchiveJobs();
             returnJson($archivedJobs);
+            break;
+        case 'report':
+            switch(filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING)) {
+                case 'current-jobs':
+                    $CurrentJobsReport = new CurrentJobsReport();
+                    return true;
+                break;
+            }
             break;
         default:
             getError('no function requested');

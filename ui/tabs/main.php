@@ -37,7 +37,14 @@
 </div>
 </div>
 </section>
+</div>
+<div class="container-fluid">
 <section id="reporting-layout-parent" class="animated fadeIn hide">
-  <h2>Reporting</h2>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Reporting</h2>
+        <?php require __DIR__."/reports/currentJobsReport.php"; ?>
+    </div>
+  </div>
 </section>
 </div>

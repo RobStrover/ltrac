@@ -34,4 +34,6 @@ var mainNavigationItems = [
     "reporting"
 ];
 
-initMainNavigationItems(mainNavigationItems);
+setTimeout(function(){
+    initMainNavigationItems(mainNavigationItems);
+},0);
