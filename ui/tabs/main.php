@@ -1,4 +1,5 @@
-<div class="container-fluid animated fadeIn">
+<div class="container-fluid">
+<section id="jobs-layout-parent" class="animated fadeIn">
   <div class="row">
     <div class="col-sm-12">
   <!-- Nav tabs -->
@@ -35,4 +36,8 @@
 
 </div>
 </div>
+</section>
+<section id="reporting-layout-parent" class="animated fadeIn hide">
+  <h2>Reporting</h2>
+</section>
 </div>
