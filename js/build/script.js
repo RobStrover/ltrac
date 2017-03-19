@@ -12296,8 +12296,8 @@ if(addJobButton.length > 0) {
 }
 
 function registerAddJobButton(addJobButton) {
-    e.preventDefault();
     addJobButton.on('click', function(e){
+        e.preventDefault();
         showSpinner();
         setTimeout(function(){
             registerNewJob();
@@ -13559,30 +13559,43 @@ function buildJobModal(singleResponse){
 	});
 
 }
-var reportingTabButton = $('#reporting-tab-btn');
 
-if(reportingTabButton.length > 0) {
-    registerAddJobButton(reportingTabButton);
-}
+function initMainNavigationItems(mainNavigationItems) {
+    mainNavigationItems.forEach(function(navigationItem){
+        var navigationItemButton = $('#' + navigationItem + '-tab-btn');
+        if(navigationItemButton.length > 0) {
+            var navigationItemTarget = $("#" + navigationItem + '-layout-parent');
+            if(navigationItemTarget.length > 0) {
+                navigationItemButton.on('click', function(e){
+                    e.preventDefault();
+                        mainNavigationItems.forEach(function(navigationItem){
+                            if(navigationItemTarget.attr('id') !== navigationItem + '-layout-parent') {
+                                setTimeout(function(){
+                                    $('#' + navigationItem + '-layout-parent').addClass('hide');
+                                },0);
+                            } else {
+                                $('#' + navigationItem + '-layout-parent').removeClass('hide');
+                            }
 
-function registerAddJobButton(reportingTabButton) {
-    reportingTabButton.on('click', function(e){
-    	e.preventDefault();
-        showSpinner();
-        setTimeout(function(){
-            transitionOutJobs();
-            transitionInReporting();
-        },0);
+                        });
+                })
+            } else {
+                navigationItemButton.remove();
+            }
+
+        }
     });
+
+
 }
 
-function transitionOutJobs() {
-	$('#jobs-layout-parent').addClass("animated zoomOutLeft");
-}
 
-function transitionInReporting() {
-	$('#reporting-layout-parent').addClass("animated zoomInRight");
-}
+var mainNavigationItems = [
+    "jobs",
+    "reporting"
+];
+
+initMainNavigationItems(mainNavigationItems);
 
 function saveJobContent(jobId, jobContent){
     showSpinner();

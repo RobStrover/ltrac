@@ -22,9 +22,9 @@
       <ul class="nav navbar-nav">
 
         <li class="dropdown">
-          <a href="#" id="jobs-tab-button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jobs <span class="caret"></span></a>
+          <a href="#" id="jobs-tab-button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-road"  aria-hidden="true"></span> Jobs <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#" id="jobs-tab-btn" class="main-navigation-button" data-target="jobs-layout-parent"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Jobs Tab</a></li>
+            <li><a href="#" id="jobs-tab-btn" class="main-navigation-button" data-target="jobs-layout-parent"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Jobs Tab</a></li>
             <li><a href="#" id="add-job-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Job</a></li>
           </ul>
         </li>
