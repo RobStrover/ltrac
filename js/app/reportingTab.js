@@ -11,9 +11,7 @@ function initReportingButtons() {
 }
 
 
-function requestAjaxReport(reportType, button) {
-    // button.addClass('disabled');
-    // var originalText = button.text();
+function requestAjaxReport(reportType) {
     window.open(
         "app/ajax_return.php?data=report&type="+reportType
     );

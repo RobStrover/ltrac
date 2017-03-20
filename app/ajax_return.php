@@ -10,6 +10,7 @@ use \Repositories\Job\Writing\DeleteJob as DeleteJob;
 use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
 use \Repositories\Reporting\CurrentJobsReport as CurrentJobsReport;
+use \Repositories\Job\Reading\GetJobInvoice as GetJobInvoice;
 
 require_once 'start.php';
 
@@ -93,6 +94,17 @@ if(array_key_exists('function',$_POST)){
                     $CurrentJobsReport = new CurrentJobsReport();
                     return true;
                 break;
+            }
+            break;
+        case 'file':
+            switch(filter_input(INPUT_GET, 'document', FILTER_SANITIZE_STRING)) {
+                case 'invoice':
+                    $jobId = filter_input(INPUT_GET, 'jobid', FILTER_SANITIZE_STRING);
+                    if(empty($jobId)) {
+                        getError('no-job-id');
+                    }
+                    $InvoiceForJob = new GetJobInvoice($jobId);
+                    break;
             }
             break;
         default:

@@ -13378,6 +13378,60 @@ function buildJobModal(singleResponse){
 
 
 
+
+
+
+
+
+
+	// Generate Invoice Button
+
+	var jobModalGenerateInvoiceButton = getTag("<button/>",{
+		"id":"jobModal"+jobData.job_id+"GenerateInvoiceButton",
+		"data-jobid":jobData.job_id,
+		"class":"btn btn-primary btn-block",
+		"text":"Generate Invoice "
+	});
+
+	var jobModalGenerateInvoiceButtonInstruction = getTag("<div/>",{
+		"class":"col-xs-12 col-sm-9 col-sm-push-3"
+	}).append(getTag("<p/>",{
+		"text":"Generate an invoice for this job."
+	}));
+
+	jobModalGenerateInvoiceButton.on("click", function(e){
+		var jobForInvoice = jobModalGenerateInvoiceButton.data("jobid");
+		window.open(
+			"app/ajax_return.php?data=file&document=invoice&jobid="+jobForInvoice
+		);
+	});
+
+	var downloadInvoiceButtonIcon = getTag("<span/>",{
+		"class":"glyphicon glyphicon-save-file",
+		"aria-hidden":"true"
+	});
+
+	var jobModalDownloadInvoiceFormGroup = getTag("<div/>",{
+		"class":"col-xs-12 col-sm-3 col-sm-pull-9"
+	}).append(
+		jobModalGenerateInvoiceButton.append(
+			downloadInvoiceButtonIcon
+		)
+	);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Delete Job Button
 
     var jobModalDeleteButton = getTag("<button/>",{
@@ -13508,6 +13562,15 @@ function buildJobModal(singleResponse){
 
 
 
+	// Files Tab
+
+	jobModalTabPanelFiles.append(
+		jobModalGenerateInvoiceButtonInstruction,
+		jobModalDownloadInvoiceFormGroup
+	);
+
+
+
     // Add Actions Items
 
     jobModalTabPanelActions.append(
@@ -13612,9 +13675,7 @@ function initReportingButtons() {
 }
 
 
-function requestAjaxReport(reportType, button) {
-    // button.addClass('disabled');
-    // var originalText = button.text();
+function requestAjaxReport(reportType) {
     window.open(
         "app/ajax_return.php?data=report&type="+reportType
     );
@@ -13685,7 +13746,7 @@ function updateCounter(counter){
 	}
 
 function updateAllCounters(){
-	counters = [
+	var counters = [
 		"new-enquiry",
 		"quote-given",
 		"current-job",
