@@ -7,7 +7,7 @@ function updateCounter(counter){
 	}
 
 function updateAllCounters(){
-	counters = [
+	var counters = [
 		"new-enquiry",
 		"quote-given",
 		"current-job",
