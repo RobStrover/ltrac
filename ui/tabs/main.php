@@ -51,6 +51,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2>Clients</h2>
+      <?php require __DIR__."/clients/clients-search.php"; ?>
       <?php require __DIR__."/clients/clients-list.php"; ?>
     </div>
   </div>
