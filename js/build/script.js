@@ -13592,7 +13592,8 @@ function initMainNavigationItems(mainNavigationItems) {
 
 var mainNavigationItems = [
     "jobs",
-    "reporting"
+    "reporting",
+    "client"
 ];
 
 setTimeout(function(){
