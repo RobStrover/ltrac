@@ -5,6 +5,7 @@ var minify = require('gulp-minify');
 gulp.task('default', function() {
     gulp.src([
         'js/lib/jquery.js',
+        'js/lib/appear.js',
         'js/lib/bootstrap.min.js',
         'js/lib/typeahead.jquery.js',
         // 'js/lib/jspdf.debug.js',
