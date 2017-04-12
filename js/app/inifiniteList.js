@@ -14,7 +14,7 @@ function initInfiniteList(listResultsParentsId) {
         "data-list-id":listResultsParentsId
     });
 
-    listToInit.clear();
+    listToInit.empty();
 
     listToInit.append(endItem);
 
@@ -24,4 +24,27 @@ function initInfiniteList(listResultsParentsId) {
 
 function infiniteListEnd(listResultsParentsId){
 
+    var list = $('#' + listResultsParentsId);
+    var listType = list.data('list-type');
+
+    var dataForList = infiniteListNextResults(listType);
+
 }
+
+    // function infiniteListNextResults(listType, searchArguments){
+    //     showSpinner();
+    //     $.ajax({
+    //         type: 'POST',
+    //         dataType: "json",
+    //         url: "app/ajax_return.php"
+    //         data: {
+    //             function: 'getInfiniteListResults',
+    //             listType: listType,
+    //             searchArguments: searchArguments
+    //         },
+    //         success: function(response) {
+    //             return(response);
+    //         }
+    //     });
+    //     hideSpinner();
+    // }

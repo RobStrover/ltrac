@@ -1,3 +1,3 @@
 
-
+initInfiniteList('client-search-list');
 
