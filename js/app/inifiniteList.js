@@ -31,20 +31,20 @@ function infiniteListEnd(listResultsParentsId){
 
 }
 
-    // function infiniteListNextResults(listType, searchArguments){
-    //     showSpinner();
-    //     $.ajax({
-    //         type: 'POST',
-    //         dataType: "json",
-    //         url: "app/ajax_return.php"
-    //         data: {
-    //             function: 'getInfiniteListResults',
-    //             listType: listType,
-    //             searchArguments: searchArguments
-    //         },
-    //         success: function(response) {
-    //             return(response);
-    //         }
-    //     });
-    //     hideSpinner();
-    // }
+    function infiniteListNextResults(listType, searchArguments){
+        showSpinner();
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: "app/ajax_return.php",
+            data: {
+                function: 'getInfiniteListResults',
+                listType: listType,
+                searchArguments: searchArguments
+            },
+            success: function(response) {
+                return(response);
+            }
+        });
+        hideSpinner();
+    }
