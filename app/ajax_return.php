@@ -62,6 +62,10 @@ if(array_key_exists('function',$_POST)){
             );
             returnJson($proprietorContactDetails);
             break;
+        case 'getInfiniteListResults':
+            $listType = filter_input(INPUT_POST, 'listType', FILTER_SANITIZE_STRING);
+            $searchArguments = $_POST['searchArguments'];
+            break;
         default:
             getError('no function requested');
             exit();
