@@ -1,33 +1,60 @@
 
 
-function initInfiniteList(listResultsParentsId) {
+function initInfiniteList(listParentId) {
 
-    var listToInit = $('#' + listResultsParentsId);
+    var listResultsParent = $('#' + listParentId + '-list');
+    var listControlsParent = $('#' + listParentId + '-controls');
+    var listSubmitControl = listControlsParent.find('.search-control-submit');
 
-    if(!listToInit) {
+    if(!listResultsParent) {
         return;
+    }
+
+    if(listSubmitControl.length > 0) {
+        listSubmitControl.on('click', function(){
+            listSubmitControl.unbind('click');
+            initInfiniteList(listParentId);
+        });
     }
 
     var endItem = getTag("div",{
         "class":"col-sm-12 end-of-list",
-        "data-position":"0",
-        "data-list-id":listResultsParentsId
+        "data-list-id":listParentId
     });
 
-    listToInit.empty();
+    listResultsParent.empty();
 
-    listToInit.append(endItem);
+    listResultsParent.append(endItem);
 
-    endItem.on('appear', infiniteListEnd(listResultsParentsId));
+    endItem.on('appear', infiniteListEnd(listParentId, listControlsParent, listResultsParent));
 
 }
 
-function infiniteListEnd(listResultsParentsId){
+function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
 
-    var list = $('#' + listResultsParentsId);
-    var listType = list.data('list-type');
+    var listParent = $('#' + listParentId);
 
-    var dataForList = infiniteListNextResults(listType);
+    // This will be overwritten if we find a list type control
+    var listType = listParent.data('list-type');
+
+    var searchArguments = {};
+        listControlsParent = $(listControlsParent);
+        listResultsParent = $(listResultsParent);
+
+    var listControls = listControlsParent.find('.search-control');
+
+    listControls.each(function(index){
+        var control = $(this);
+
+        // Overwriting the list type here if we find the right control
+        if(control.attr('id') == listParentId + '-type') {
+            listType = control.val();
+        } else {
+            searchArguments[control.attr('id')] = control.val();
+        }
+    });
+
+    var dataForList = infiniteListNextResults(listType, searchArguments);
 
 }
 

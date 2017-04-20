@@ -2,12 +2,12 @@
 
 use Repositories\Db\Connection\GetConnection as Connection;
 
-class GetProprietorSingle
+class InfiniteListUpdate
 {
 	public $listType;
     public $searchArguments;
 
     public function getNextResults() {
-    	die('you got there!!! your variables are:' $listType, $searchArguments);
+    	var_dump('you got there!!! your variables are:', $this->listType, $this->searchArguments);
     }
 }
