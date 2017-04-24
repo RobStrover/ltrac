@@ -65,6 +65,7 @@ if(array_key_exists('function',$_POST)){
             break;
         case 'getInfiniteListResults':
             $listType = filter_input(INPUT_POST, 'listType', FILTER_SANITIZE_STRING);
+            $searchLimitFrom = filter_input(INPUT_POST, 'limitFrom', FILTER_SANITIZE_STRING);
             $filteredSearchArguments = array();
             $searchArguments = $_POST['searchArguments'];
             foreach($searchArguments as $key=>$value) {
@@ -73,6 +74,7 @@ if(array_key_exists('function',$_POST)){
             $infiniteListUpdate = new InfiniteListUpdate();
             $infiniteListUpdate->listType = $listType;
             $infiniteListUpdate->searchArguments = $filteredSearchArguments;
+            $infiniteListUpdate->searchLimitFrom = $searchLimitFrom;
             $resultToReturn = $infiniteListUpdate->getNextResults();
             break;
         default:

@@ -22,7 +22,7 @@ function initInfiniteList(listParentId) {
         "data-list-id":listParentId
     });
 
-    listResultsParent.empty();
+    // listResultsParent.empty();
 
     listResultsParent.append(endItem);
 
@@ -54,11 +54,14 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
         }
     });
 
-    var dataForList = infiniteListNextResults(listType, searchArguments);
+    var currentList = listResultsParent.find('.searchResultItem');
+    var currentListCount = currentList.length;
+
+    var dataForList = infiniteListNextResults(listType, searchArguments, currentListCount);
 
 }
 
-    function infiniteListNextResults(listType, searchArguments){
+    function infiniteListNextResults(listType, searchArguments, limitFrom){
         showSpinner();
         $.ajax({
             type: 'POST',
@@ -67,7 +70,8 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
             data: {
                 function: 'getInfiniteListResults',
                 listType: listType,
-                searchArguments: searchArguments
+                searchArguments: searchArguments,
+                limitFrom: limitFrom
             },
             success: function(response) {
                 return(response);

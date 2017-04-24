@@ -3,8 +3,8 @@
         <div class="col-xs-5 col-sm-2">
             <div class="form-group">
                 <select id="clients-search-type" class="search-control form-control">
-                    <option value="person">Person</option>
-                    <option value="company">Company</option>
+                    <option value="contact">Person</option>
+                    <option value="proprietor">Company</option>
                 </select>
             </div>
         </div>
