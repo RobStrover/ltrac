@@ -1,6 +1,6 @@
 <?php namespace Repositories\InfiniteList;
 
-use Repositories\Db\Connection\GetConnection as Connection;
+use Repositories\Db\Reading\ReadQuery as ReadQuery;
 
 class InfiniteListUpdate
 {
@@ -9,6 +9,24 @@ class InfiniteListUpdate
     public $searchLimitFrom;
 
     public function getNextResults() {
-    	var_dump('you got there!!! your variables are:', $this->listType, $this->searchArguments, $this->searchLimitFrom);
+        $queryMapping = $this->mapSearchType($this->listType);
+    	$nextResults = new ReadQuery($this->listType, $this->searchArguments, $this->searchLimitFrom, $queryMapping);
+    }
+
+    private function mapSearchType($listType) {
+        switch($listType) {
+            case 'company':
+                return array(
+                   array('company_name', 'like', 'clients-search-term'),
+                   array('company_telephone_number', 'like', 'clients-search-term')
+                );
+                break;
+            case 'contact':
+                return array(
+                    array('contact_name', 'like', 'clients-search-term'),
+                    array('contact_telephone_number', 'like', 'clients-search-term')
+                );
+                break;
+        }
     }
 }
