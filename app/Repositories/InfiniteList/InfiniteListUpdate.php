@@ -15,17 +15,36 @@ class InfiniteListUpdate
 
     private function mapSearchType($listType) {
         switch($listType) {
-            case 'company':
+            case 'proprietor':
                 return array(
-                   array('company_name', 'like', 'clients-search-term'),
-                   array('company_telephone_number', 'like', 'clients-search-term')
+                   array(
+                       'form_field' => 'clients-search-term',
+                       'operator' => 'like',
+                       'database_field' => 'company_name'
+                   ),
+                   array(
+                       'form_field' =>'clients-search-term',
+                       'operator' => 'like',
+                       'database_field' => 'company_telephone_number'
+                   )
                 );
                 break;
             case 'contact':
                 return array(
-                    array('contact_name', 'like', 'clients-search-term'),
-                    array('contact_telephone_number', 'like', 'clients-search-term')
+                    array(
+                        'form_field' => 'clients-search-term',
+                        'operator' => 'like',
+                        'database_field' => 'contact_name'
+                    ),
+                    array(
+                        'form_field' =>'clients-search-term',
+                        'operator' => 'like',
+                        'database_field' => 'contact_contact_numbers'
+                    )
                 );
+                break;
+            default:
+                return array();
                 break;
         }
     }
