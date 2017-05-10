@@ -17,17 +17,21 @@ function initInfiniteList(listParentId) {
         });
     }
 
+    listResultsParent.empty();
+
+    addEndItem(listParentId, listControlsParent, listResultsParent);
+
+}
+
+function addEndItem(listParentId, listControlsParent, listResultsParent) {
     var endItem = getTag("div",{
         "class":"col-sm-12 end-of-list",
         "data-list-id":listParentId
     });
 
-    // listResultsParent.empty();
-
     listResultsParent.append(endItem);
 
     endItem.on('appear', infiniteListEnd(listParentId, listControlsParent, listResultsParent));
-
 }
 
 function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
@@ -57,23 +61,10 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
     var currentList = listResultsParent.find('.searchResultItem');
     var currentListCount = currentList.length;
 
-    var dataForList = infiniteListNextResults(listType, searchArguments, currentListCount);
-
-    console.log(dataForList);
-
-    dataForList.forEach(function(listItem){
-        addItemToList(listResultsParent, listItem);
-    });
-
+    infiniteListNextResults(listType, searchArguments, currentListCount, listParentId, listControlsParent, listResultsParent);
 }
 
-    function addItemToList(listResultsParent, listItem) {
-        var listResultsParent = $(listResultsParent);
-        console.log(listItem);
-        listResultsParent.append('item');
-    }
-
-    function infiniteListNextResults(listType, searchArguments, limitFrom){
+    function infiniteListNextResults(listType, searchArguments, limitFrom, listParentId, listControlsParent, listResultsParent){
         showSpinner();
         $.ajax({
             type: 'POST',
@@ -85,9 +76,86 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
                 searchArguments: searchArguments,
                 limitFrom: limitFrom
             },
-            success: function(response) {
-                return(response);
+            success: function(dataForList) {
+                dataForList.forEach(function(listItem){
+                    addItemToList(listResultsParent, listItem, listType);
+                });
+                // addEndItem(listParentId, listControlsParent, listResultsParent);
             }
         });
         hideSpinner();
     }
+
+
+function addItemToList(listResultsParent, listItem, listType) {
+
+    var listResultsParentObj = $(listResultsParent);
+
+        var newItemParent = $(
+            "<div/>",{
+                "id": listType+listItem.listType+'_id',
+                "class": "col-sm-12 " + listType + " animated fadeIn"
+            }
+        )
+        var newItemTitleRow = $(
+            "<div/>",{
+                "class": "row"
+            }
+        )
+        var newItemDataRow = $(
+            "<div/>",{
+                "class": "row"
+            }
+        )
+        var newItemCol12Title = $(
+            "<div/>",{
+                "class":"col-sm-12 job-col-title"
+            })
+        var newItemCol4Location = $(
+            "<div/>",{
+                "class":"col-sm-4"
+            })
+        var newItemCol4Client = $(
+            "<div/>",{
+                "class":"col-sm-4"
+            })
+
+        var newItemTitleLink = $(
+            "<a/>",{
+                "href": '#',
+                "class": 'job-link',
+                itemId: listType+listItem.listType+'_id'
+            })
+
+        var newItemTitle = $(
+            "<h4/>",{
+                "class": "new-job-title",
+                "text": listItem[listType+'_name']
+            }
+        )
+        // var newItemLocation = $(
+        //     "<p/>",{
+        //         "class": jobData.job_id+"-location",
+        //         "text": "location data here"
+        //     })
+        // var newItemClient = $(
+        //     "<p/>",{
+        //         "class": jobData.job_id+"-client",
+        //         "text": "client data here"
+        //     })
+
+
+        newItemTitleLink.append(newItemTitle);
+        newItemCol12Title.append(newItemTitleLink);
+        newItemTitleRow.append(newItemCol12Title);
+
+        // newItemCol4Location.append(newItemLocation);
+        // newItemCol4Client.append(newItemClient);
+
+        newItemDataRow.append(newItemCol4Location).append(newItemCol4Client);
+
+        newItemParent.append(newItemTitleRow).append(newItemDataRow).append('<hr>');
+
+    listResultsParentObj.append(newItemParent);
+
+}
