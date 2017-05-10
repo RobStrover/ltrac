@@ -12871,7 +12871,19 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
 
     var dataForList = infiniteListNextResults(listType, searchArguments, currentListCount);
 
+    console.log(dataForList);
+
+    dataForList.forEach(function(listItem){
+        addItemToList(listResultsParent, listItem);
+    });
+
 }
+
+    function addItemToList(listResultsParent, listItem) {
+        var listResultsParent = $(listResultsParent);
+        console.log(listItem);
+        listResultsParent.append('item');
+    }
 
     function infiniteListNextResults(listType, searchArguments, limitFrom){
         showSpinner();

@@ -10,7 +10,10 @@ class InfiniteListUpdate
 
     public function getNextResults() {
         $queryMapping = $this->mapSearchType($this->listType);
-    	$nextResults = new ReadQuery($this->listType, $this->searchArguments, $this->searchLimitFrom, $queryMapping);
+    	$infiniteListObject = new ReadQuery($this->listType, $this->searchArguments, $this->searchLimitFrom, $queryMapping);
+    	$nextResults = $infiniteListObject->getReadResults();
+
+    	return ($nextResults);
     }
 
     private function mapSearchType($listType) {
@@ -20,12 +23,12 @@ class InfiniteListUpdate
                    array(
                        'form_field' => 'clients-search-term',
                        'operator' => 'like',
-                       'database_field' => 'company_name'
+                       'database_field' => 'proprietor_name'
                    ),
                    array(
                        'form_field' =>'clients-search-term',
                        'operator' => 'like',
-                       'database_field' => 'company_telephone_number'
+                       'database_field' => 'proprietor_telephone_number'
                    )
                 );
                 break;

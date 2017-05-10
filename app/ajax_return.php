@@ -76,6 +76,7 @@ if(array_key_exists('function',$_POST)){
             $infiniteListUpdate->searchArguments = $filteredSearchArguments;
             $infiniteListUpdate->searchLimitFrom = $searchLimitFrom;
             $resultToReturn = $infiniteListUpdate->getNextResults();
+            returnJson($resultToReturn);
             break;
         default:
             getError('no function requested');

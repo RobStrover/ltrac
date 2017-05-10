@@ -5,16 +5,29 @@ use Repositories\Db\Connection\GetConnection as Connection;
 class ReadQuery
 {
     protected $readQuery;
+    protected $readResults;
 
     public function __construct($searchType, $searchArguments, $limitFrom, $queryMapping = array())
     {
         $searchArgumentsSanitised = $this->sanitiseSearchArguments($searchArguments);
         $searchArgumentsSql = $this->prepareSqlSearchArguments($searchArgumentsSanitised, $queryMapping);
-        $this->readQuery = $this->buildQuery($searchType, $searchArgumentsSql, $limitFrom);
+        $searchLimit = $this->preapreSearchLimit($limitFrom);
+
+        $DbConnection = new Connection();
+
+        if(null !== $DbConnection->connection) {
+            $this->readQuery = $this->buildQuery($searchType, $searchArgumentsSql, $searchLimit);
+            $this->readResults = $DbConnection->connection->query($this->readQuery);
+            $this->readResults = mysqli_fetch_all($this->readResults,MYSQLI_ASSOC);
+            }
     }
 
     public function getReadQuery() {
         return $this->readQuery;
+    }
+
+    public function getReadResults() {
+        return $this->readResults;
     }
 
     private function sanitiseSearchArguments($searchArguments) {
@@ -23,6 +36,12 @@ class ReadQuery
             $sanitisedSearchArguments[$key] = FILTER_VAR($value, FILTER_SANITIZE_STRING);
         }
         return $sanitisedSearchArguments;
+    }
+
+    private function preapreSearchLimit($searchLimit) {
+        $searchLimit = sprintf(' LIMIT %d, 10', $searchLimit);
+
+        return ($searchLimit);
     }
 
     private function prepareSqlSearchArguments($searchArguments, $queryMapping) {
@@ -69,9 +88,8 @@ class ReadQuery
         return($sql);
     }
 
-    private function buildQuery($searchType, $searchArgumentsSql, $limitFrom) {
-        $sql = sprintf("SELECT * FROM `%s` %s", $searchType, $searchArgumentsSql);
-        var_dump($sql);
-        exit();
+    private function buildQuery($searchType, $searchArgumentsSql, $searchLimit) {
+        $sql = sprintf("SELECT * FROM `%s` %s %s;", $searchType, $searchArgumentsSql, $searchLimit);
+        return $sql;
     }
 }
