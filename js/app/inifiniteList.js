@@ -93,7 +93,7 @@ function addItemToList(listResultsParent, listItem, listType) {
 
         var newItemParent = $(
             "<div/>",{
-                "id": listType+listItem.listType+'_id',
+                "id": listType+'-'+listItem[listType+'_id'],
                 "class": "col-sm-12 " + listType + " animated fadeIn"
             }
         )
@@ -123,8 +123,8 @@ function addItemToList(listResultsParent, listItem, listType) {
         var newItemTitleLink = $(
             "<a/>",{
                 "href": '#',
-                "class": 'job-link',
-                itemId: listType+listItem.listType+'_id'
+                "class": 'item-link',
+                "data-itemId": listItem[listType+'_id']
             })
 
         var newItemTitle = $(
