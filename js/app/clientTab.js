@@ -1,0 +1,3 @@
+
+initInfiniteList('clients-search');
+

@@ -10,6 +10,7 @@ use \Repositories\Job\Writing\DeleteJob as DeleteJob;
 use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
 use \Repositories\Reporting\CurrentJobsReport as CurrentJobsReport;
+use \Repositories\InfiniteList\InfiniteListUpdate as InfiniteListUpdate;
 
 require_once 'start.php';
 
@@ -61,6 +62,21 @@ if(array_key_exists('function',$_POST)){
                 "proprietor-contacts"=>$proprietorSingle->proprietorContacts
             );
             returnJson($proprietorContactDetails);
+            break;
+        case 'getInfiniteListResults':
+            $listType = filter_input(INPUT_POST, 'listType', FILTER_SANITIZE_STRING);
+            $searchLimitFrom = filter_input(INPUT_POST, 'limitFrom', FILTER_SANITIZE_STRING);
+            $filteredSearchArguments = array();
+            $searchArguments = $_POST['searchArguments'];
+            foreach($searchArguments as $key=>$value) {
+                $filteredSearchArguments[$key] = filter_var($value, FILTER_SANITIZE_STRING);
+            }
+            $infiniteListUpdate = new InfiniteListUpdate();
+            $infiniteListUpdate->listType = $listType;
+            $infiniteListUpdate->searchArguments = $filteredSearchArguments;
+            $infiniteListUpdate->searchLimitFrom = $searchLimitFrom;
+            $resultToReturn = $infiniteListUpdate->getNextResults();
+            returnJson($resultToReturn);
             break;
         default:
             getError('no function requested');

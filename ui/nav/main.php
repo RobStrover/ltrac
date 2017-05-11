@@ -29,6 +29,13 @@
           </ul>
         </li>
         <li><a href="#" id="reporting-tab-btn" class="main-navigation-button" data-target="reporting-layout-parent"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reporting</a></li>
+        <li class="dropdown">
+        <a href="#" id="jobs-tab-button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"  aria-hidden="true"></span> Clients <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="client-tab-btn" class="main-navigation-button" data-target="client-layout-parent"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Clients</a></li>
+          <li><a href="#" id="add-client-btn"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Client</a></li>
+        </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

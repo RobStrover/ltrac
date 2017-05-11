@@ -23,6 +23,7 @@ class GetConnection {
                 return array(FALSE, "Could not connect to the database. ".mysqli_connect_error());
             }
 
+            mysqli_set_charset($this->connection,"utf8");
             if(!empty($this->connection->connect_error)) {
                 //error handler here.
             }

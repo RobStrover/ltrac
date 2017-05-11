@@ -47,4 +47,13 @@
     </div>
   </div>
 </section>
+<section id="client-layout-parent" class="animated fadeIn hide">
+  <div class="row">
+    <div id="clients-search" class="col-sm-12">
+      <h2>Client Search</h2>
+      <?php require __DIR__."/clients/clients-search.php"; ?>
+      <?php require __DIR__."/clients/clients-list.php"; ?>
+    </div>
+  </div>
+</section>
 </div>

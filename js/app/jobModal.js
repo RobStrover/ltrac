@@ -501,7 +501,8 @@ function buildJobModal(singleResponse){
 
     jobModalDeleteButton.on("click", function(e){
         var jobToDelete = jobModalDeleteButton.data("jobid");
-        buildJobConfirmModal("delete", jobToDelete, "WARNING", "Are you sure you want to delete this job? This cannot be reversed.");
+        buildJobConfirmModal("delete", jobToDelete, "WARNING", "Are you sure you want to delete this job? This cannot be reversed." +
+			"Use this for jobs that are unwanted or created in error.");
     });
 
     var confirmModalConfirmButtonIcon = getTag("<span/>",{
@@ -531,7 +532,8 @@ function buildJobModal(singleResponse){
 	var jobModalArchiveButtonInstruction = getTag("<div/>",{
 		"class":"col-xs-12 col-sm-9 col-sm-push-3"
 	}).append(getTag("<p/>",{
-		"text":"An archived job is moved to the archive folder and is still reflected in reporting."
+		"text":"An archived job is moved to the archive folder and is still reflected in reporting. Use this for jobs that" +
+		"are not longer active but need to be reflected in reporting."
 	}));
 
 	jobModalArchiveButton.on("click", function(e){
