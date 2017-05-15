@@ -12823,7 +12823,8 @@ function initInfiniteList(listParentId) {
     }
 
     if(listSubmitControl.length > 0) {
-        listSubmitControl.on('click', function(){
+        listSubmitControl.on('click', function(e){
+            e.preventDefault();
             listSubmitControl.unbind('click');
             initInfiniteList(listParentId);
         });
@@ -12832,6 +12833,15 @@ function initInfiniteList(listParentId) {
     listResultsParent.empty();
 
     addEndItem(listParentId, listControlsParent, listResultsParent);
+
+    listResultsParent.on('click', '.item-link', function(e) {
+        e.preventDefault();
+        var clickedItem = $(this);
+        var clickedItemType = clickedItem.attr('data-item-type');
+        var clickedItemId = clickedItem.attr('data-item-id');
+
+        console.log(clickedItemId, clickedItemType);
+    })
 
 }
 
@@ -12908,43 +12918,44 @@ function addItemToList(listResultsParent, listItem, listType) {
                 "id": listType+'-'+listItem[listType+'_id'],
                 "class": "col-sm-12 " + listType + " animated fadeIn"
             }
-        )
+        );
         var newItemTitleRow = $(
             "<div/>",{
                 "class": "row"
             }
-        )
+        );
         var newItemDataRow = $(
             "<div/>",{
                 "class": "row"
             }
-        )
+        );
         var newItemCol12Title = $(
             "<div/>",{
                 "class":"col-sm-12 job-col-title"
-            })
+            });
         var newItemCol4Location = $(
             "<div/>",{
                 "class":"col-sm-4"
-            })
+            });
         var newItemCol4Client = $(
             "<div/>",{
                 "class":"col-sm-4"
-            })
+            });
 
         var newItemTitleLink = $(
             "<a/>",{
                 "href": '#',
                 "class": 'item-link',
-                "data-itemId": listItem[listType+'_id']
-            })
+                "data-item-id": listItem[listType+'_id'],
+                "data-item-type": listType
+            });
 
         var newItemTitle = $(
             "<h4/>",{
                 "class": "new-job-title",
                 "text": listItem[listType+'_name']
             }
-        )
+        );
         // var newItemLocation = $(
         //     "<p/>",{
         //         "class": jobData.job_id+"-location",

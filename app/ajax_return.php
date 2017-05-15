@@ -54,6 +54,9 @@ if(array_key_exists('function',$_POST)){
                 return true;
             }
             break;
+        case 'getSingleContactDetails':
+            $contactId = filter_input(INPUT_POST, 'contactId', FILTER_SANITIZE_NUMBER_INT);
+            break;
         case 'getSingleProprietorDetails':
             $proprietor_id = filter_input(INPUT_POST, 'proprietorId', FILTER_SANITIZE_NUMBER_INT);
             $proprietorSingle = new GetProprietorSingle($proprietor_id);
