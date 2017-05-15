@@ -10,9 +10,22 @@ function buildContactModal(contactId) {
             contactId: contactId
         },
         success: function (singleResponse) {
-            processSingleResponse(singleResponse);
+            processSingleClientResponse(singleResponse);
         }
     });
     hideSpinner();
+
+}
+
+
+function processSingleClientResponse(singleResponse) {
+
+    setTimeout(showContactModal(singleResponse), 0);
+
+}
+
+function showContactModal(contactData) {
+
+    console.log(contactData);
 
 }

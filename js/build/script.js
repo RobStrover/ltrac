@@ -12810,6 +12810,54 @@ function initClientDetails(job_id) {
 initInfiniteList('clients-search');
 
 
+function buildContactModal(contactId) {
+
+    showSpinner();
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        url: "app/ajax_return.php",
+        data: {
+            function: 'getSingleContactDetails',
+            contactId: contactId
+        },
+        success: function (singleResponse) {
+            processSingleClientResponse(singleResponse);
+        }
+    });
+    hideSpinner();
+
+}
+
+
+function processSingleClientResponse(singleResponse) {
+
+    setTimeout(showContactModal(singleResponse), 0);
+
+}
+
+function showContactModal(contactData) {
+
+    console.log(contactData);
+
+}
+function openInfiniteListModal(modalItemType, modalItemId) {
+
+    switch(modalItemType) {
+        case 'contact':
+            buildContactModal(modalItemId);
+            break;
+        case 'proprietor':
+            buildProprietorModal(modalItemId);
+            break;
+        case 'job-archived':
+            getJobData(modalItemId);
+            break;
+        default:
+            break;
+    }
+
+}
 
 
 function initInfiniteList(listParentId) {
@@ -12839,6 +12887,8 @@ function initInfiniteList(listParentId) {
         var clickedItem = $(this);
         var clickedItemType = clickedItem.attr('data-item-type');
         var clickedItemId = clickedItem.attr('data-item-id');
+
+        openInfiniteListModal(clickedItemType, clickedItemId);
 
         console.log(clickedItemId, clickedItemType);
     })
@@ -13895,6 +13945,9 @@ setTimeout(function(){
     initMainNavigationItems(mainNavigationItems);
 },0);
 
+function buildProprietorModal(proprietorId) {
+
+}
 function initReportingButtons() {
     var reportingButtons = $('a.download-report-button');
 
