@@ -36,8 +36,8 @@ class GetProprietorSingle
         $DbConnection = new Connection();
         if(null !== $DbConnection->connection) {
             $proprietorQuery = sprintf(
-                "SELECT * FROM contact" .
-                " INNER JOIN proprietor_contact" .
+                "SELECT * FROM contact AS c" .
+                " INNER JOIN proprietor_contact AS pc" .
                 " ON pc.proprietor_contact_contact_id = c.contact_id" .
                 " WHERE pc.proprietor_contact_proprietor_id = '%d';"
                 , $proprietor_id

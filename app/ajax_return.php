@@ -9,6 +9,7 @@ use \Repositories\Job\Writing\SaveJob as SaveJob;
 use \Repositories\Job\Writing\DeleteJob as DeleteJob;
 use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
+use \Repositories\Contact\Reading\GetContactSingle as GetContactSingle;
 use \Repositories\Reporting\CurrentJobsReport as CurrentJobsReport;
 use \Repositories\InfiniteList\InfiniteListUpdate as InfiniteListUpdate;
 
@@ -53,6 +54,15 @@ if(array_key_exists('function',$_POST)){
             if($ArchiveJob->archiveJob($jobId)){
                 return true;
             }
+            break;
+        case 'getSingleContactDetails':
+            $contactId = filter_input(INPUT_POST, 'contactId', FILTER_SANITIZE_NUMBER_INT);
+            $contactSingle = new GetContactSingle($contactId);
+            $singleContactDetails = array(
+                "contact-details" => $contactSingle->contactDetails,
+                "contact-proprietors" => $contactSingle->contactProprietors
+            );
+            returnJson($singleContactDetails);
             break;
         case 'getSingleProprietorDetails':
             $proprietor_id = filter_input(INPUT_POST, 'proprietorId', FILTER_SANITIZE_NUMBER_INT);
