@@ -29,8 +29,7 @@ function initInfiniteList(listParentId) {
         var clickedItemId = clickedItem.attr('data-item-id');
 
         openInfiniteListModal(clickedItemType, clickedItemId);
-
-        console.log(clickedItemId, clickedItemType);
+        
     })
 
 }
