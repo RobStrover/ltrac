@@ -13058,6 +13058,9 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
                 searchArguments: searchArguments,
                 limitFrom: limitFrom
             },
+            beforeSend: function() {
+                addInfiniteListSpinner(listParentId);
+            },
             success: function(dataForList) {
                 dataForList.forEach(function(listItem){
                     addItemToList(listResultsParent, listItem, listType);
@@ -14134,6 +14137,12 @@ function addButtonSpinner(){
 
 function removeButtonSpinner(){
 $('#button-loading-spinner').remove();
+}
+
+function addInfiniteListSpinner(listParentId) {
+	var listParent = $(listParentId);
+
+	console.log(listParent);
 }
 function updateCounter(counter){
 

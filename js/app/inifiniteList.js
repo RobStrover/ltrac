@@ -87,6 +87,9 @@ function infiniteListEnd(listParentId, listControlsParent, listResultsParent){
                 searchArguments: searchArguments,
                 limitFrom: limitFrom
             },
+            beforeSend: function() {
+                addInfiniteListSpinner(listParentId);
+            },
             success: function(dataForList) {
                 dataForList.forEach(function(listItem){
                     addItemToList(listResultsParent, listItem, listType);

@@ -24,3 +24,9 @@ function addButtonSpinner(){
 function removeButtonSpinner(){
 $('#button-loading-spinner').remove();
 }
+
+function addInfiniteListSpinner(listParentId) {
+	var listParent = $(listParentId);
+
+	console.log(listParent);
+}
