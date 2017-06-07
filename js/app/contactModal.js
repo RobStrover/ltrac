@@ -27,6 +27,8 @@ function processSingleClientResponse(singleResponse) {
 function showContactModal(modalData) {
 
     var contactData = modalData['contact-details'][0];
+    var contactTelephoneNumbers = contactData['contact_contact_numbers'];
+    contactTelephoneNumbers = JSON.parse(contactTelephoneNumbers);
     var contactProrpietors = modalData['contact-proprietors'];
 
     console.log(contactData, contactData.contact_name, contactProrpietors);
@@ -104,7 +106,7 @@ function showContactModal(modalData) {
     // Contact Name
 
     var contactNameFormGroup = getTag("<div/>",{
-        "class":"form-group col-sm-4"
+        "class":"form-group col-sm-12"
     });
 
     contactNameFormGroup.append(getTag("<label/>",{
@@ -121,7 +123,35 @@ function showContactModal(modalData) {
         "value":contactData.contact_name
     }));
 
-    modalBody.append(contactNameFormGroup);
+
+    // Contact Telephone Numbers
+
+    var contactTelephoneSectionParent = getTag("<div/>",{
+        "class":"form-group col-sm-12"
+    });
+
+
+    // Contact Details Section
+
+    var contactDetailsSectionParent = getTag("<div/>", {
+       "id":"contactModal"+contactData.contact_id+"ContactDetailsSection",
+        "class":"col-sm-6"
+    });
+
+    var contactDetailsSection = getTag("<div/>", {
+        "class":"row"
+    });
+
+    contactDetailsSectionParent.append(
+        contactDetailsSection
+    );
+
+    contactDetailsSection.append(
+      contactNameFormGroup,
+      contactTelephoneSectionParent
+    );
+
+    modalBody.append(contactDetailsSectionParent);
 
     contactModalContent.append(contactModalHeader);
     contactModalContent.append(modalBody);
@@ -134,9 +164,18 @@ function showContactModal(modalData) {
     $('#jobModal'+contactData.contact_id).modal({
         backdrop: 'static',
         keyboard: 'true'
-    })
-        .on('hidden.bs.modal', function (e) {
+    }).on({
+        'show.bs.modal': function (e) {
+            setTimeout(initModalTelephoneNumberSection(contactTelephoneSectionParent, contactTelephoneNumbers), 0);
+        },
+        'hidden.bs.modal': function (e) {
             setTimeout(refreshCurrent(), 0);
-        });
+        }
+    });
 
+}
+
+function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumbers) {
+    telephoneNumbersParent = $(telephoneNumbersParent);
+    console.log(telephoneNumbersParent);
 }
