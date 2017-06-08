@@ -12929,7 +12929,6 @@ function showContactModal(modalData) {
     contactNameFormGroup.append(getTag("<input/>",{
         "id":"contactModal"+contactData.contact_id+"ContactName",
         "class":"form-control contactModalField",
-        "disabled":"disabled",
         "type":"text",
         "data-dbvar":"contact_name",
         "value":contactData.contact_name
@@ -12939,6 +12938,7 @@ function showContactModal(modalData) {
     // Contact Telephone Numbers
 
     var contactTelephoneSectionParent = getTag("<div/>",{
+        "id":"contact" + contactData.contact_id + "TelephoneNumbers",
         "class":"form-group col-sm-12"
     });
 
@@ -12977,19 +12977,106 @@ function showContactModal(modalData) {
         backdrop: 'static',
         keyboard: 'true'
     }).on({
-        'show.bs.modal': function (e) {
+        'shown.bs.modal': function (e) {
+            console.log('show triggered');
             setTimeout(initModalTelephoneNumberSection(contactTelephoneSectionParent, contactTelephoneNumbers), 0);
         },
         'hidden.bs.modal': function (e) {
+            console.log('hiding triggered');
             setTimeout(refreshCurrent(), 0);
+
         }
     });
 
 }
 
 function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumbers) {
+
     telephoneNumbersParent = $(telephoneNumbersParent);
-    console.log(telephoneNumbersParent);
+
+    var contactNumberCount = 0;
+
+    for (var label in telephoneNumbers) {
+        if (telephoneNumbers.hasOwnProperty(label)) {
+
+            contactNumberCount ++;
+
+            var number = telephoneNumbers[label];
+
+            console.log("processing number", label, number);
+
+            var numberRow = getTag('<div/>', {
+                "class":"row"
+            });
+
+
+
+
+            var contactNumberLabelFormGroup = getTag("<div/>",{
+                "class":"form-group col-sm-6"
+            });
+
+            // contactNumberLabelFormGroup.append(getTag("<label/>",{
+            //     "for":"contactModalTelephoneNumberLabel" + contactNumberCount,
+            //     "text":"Label"
+            // }));
+
+            contactNumberLabelFormGroup.append(getTag("<input/>",{
+                "id":"contactModalTelephoneNumberLabel" + contactNumberCount,
+                "class":"form-control contactNumberField",
+                "type":"text",
+                "value":label
+            }));
+
+
+
+
+
+            var contactNumberFormGroup = getTag("<div/>",{
+                "class":"col-sm-6"
+            });
+
+            var contactNumberInputGroup = getTag("<div/>",{
+                "class":"input-group"
+            });
+
+            var contactNumberInput = getTag("<input/>",{
+                "type":"text",
+                "class":"form-control",
+                "value":number
+            });
+
+            var contactNumberInputActionParent = getTag("<span/>",{
+                "class":"input-group-btn"
+            });
+
+            contactNumberInputActionParent.append(getTag("<button/>",{
+                "class":"btn btn-default",
+                "type": "button",
+                "text": "X"
+            }));
+
+            contactNumberInputGroup.append(
+                contactNumberInput,
+                contactNumberInputActionParent
+            );
+
+            contactNumberFormGroup.append(
+                contactNumberLabelFormGroup,
+                contactNumberInputGroup
+            );
+
+            numberRow.append(
+                contactNumberFormGroup
+            );
+
+        }
+    }
+    /**
+     * add code here for add new number button.
+     */
+
+    telephoneNumbersParent.append(numberRow);
 }
 function openInfiniteListModal(modalItemType, modalItemId) {
 
