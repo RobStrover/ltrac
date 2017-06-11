@@ -31,11 +31,9 @@ function showContactModal(modalData) {
     contactTelephoneNumbers = JSON.parse(contactTelephoneNumbers);
     var contactProrpietors = modalData['contact-proprietors'];
 
-    console.log(contactData, contactData.contact_name, contactProrpietors);
-
     var contactModalParent = getTag("<div/>",{
         "class":"modal fade contactModal",
-        "id":"jobModal"+contactData.contact_id,
+        "id":"contactModal"+contactData.contact_id,
         "tabindex":"-1",
         "role":"dialog"
     });
@@ -160,17 +158,18 @@ function showContactModal(modalData) {
     contactModalDialog.append(contactModalContent);
     contactModalParent.append(contactModalDialog);
 
+    $('.contact-modal').remove();
+
     $('body').append(contactModalParent);
-    $('#jobModal'+contactData.contact_id).modal({
+
+    $('#contactModal'+contactData.contact_id).modal({
         backdrop: 'static',
         keyboard: 'true'
     }).on({
         'shown.bs.modal': function (e) {
-            console.log('show triggered');
             setTimeout(initModalTelephoneNumberSection(contactTelephoneSectionParent, contactTelephoneNumbers), 0);
         },
         'hidden.bs.modal': function (e) {
-            console.log('hiding triggered');
             setTimeout(refreshCurrent(), 0);
 
         }
@@ -182,7 +181,13 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
 
     telephoneNumbersParent = $(telephoneNumbersParent);
 
+    telephoneNumbersParent.empty();
+
     var contactNumberCount = 0;
+
+    var numberRow = getTag('<div/>', {
+        "class":"row"
+    });
 
     for (var label in telephoneNumbers) {
         if (telephoneNumbers.hasOwnProperty(label)) {
@@ -191,23 +196,9 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
 
             var number = telephoneNumbers[label];
 
-            console.log("processing number", label, number);
-
-            var numberRow = getTag('<div/>', {
-                "class":"row"
-            });
-
-
-
-
             var contactNumberLabelFormGroup = getTag("<div/>",{
                 "class":"form-group col-sm-6"
             });
-
-            // contactNumberLabelFormGroup.append(getTag("<label/>",{
-            //     "for":"contactModalTelephoneNumberLabel" + contactNumberCount,
-            //     "text":"Label"
-            // }));
 
             contactNumberLabelFormGroup.append(getTag("<input/>",{
                 "id":"contactModalTelephoneNumberLabel" + contactNumberCount,
@@ -216,12 +207,16 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
                 "value":label
             }));
 
-
-
-
-
             var contactNumberFormGroup = getTag("<div/>",{
-                "class":"col-sm-6"
+                "class": label + "-number row"
+            });
+
+            var contactNumberFormGroupInner = getTag("<div/>",{
+                "class": "col-sm-12"
+            });
+
+            var contactNumberInputGroupParent = getTag("<div/>", {
+                "class": "col-sm-6"
             });
 
             var contactNumberInputGroup = getTag("<div/>",{
@@ -249,9 +244,17 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
                 contactNumberInputActionParent
             );
 
-            contactNumberFormGroup.append(
-                contactNumberLabelFormGroup,
+            contactNumberInputGroupParent.append(
                 contactNumberInputGroup
+            );
+
+            contactNumberFormGroupInner.append(
+                contactNumberLabelFormGroup,
+                contactNumberInputGroupParent
+            );
+
+            contactNumberFormGroup.append(
+                contactNumberFormGroupInner
             );
 
             numberRow.append(
