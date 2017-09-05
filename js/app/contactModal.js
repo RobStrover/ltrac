@@ -179,13 +179,9 @@ function showContactModal(modalData) {
 
 function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumbers, contactData) {
 
-    console.log(contactData);
-
     telephoneNumbersParent = $(telephoneNumbersParent);
 
     telephoneNumbersParent.empty();
-
-    var contactNumberCount = 0;
 
     var numberRow = getTag('<div/>', {
         "class":"row"
@@ -193,76 +189,12 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
 
     for (var label in telephoneNumbers) {
         if (telephoneNumbers.hasOwnProperty(label)) {
-
-            contactNumberCount ++;
-
             var number = telephoneNumbers[label];
 
-            var contactNumberLabelFormGroup = getTag("<div/>",{
-                "class":"form-group col-sm-6"
-            });
-
-            contactNumberLabelFormGroup.append(getTag("<input/>",{
-                "id":"contactModalTelephoneNumberLabel" + contactNumberCount,
-                "class":"form-control contactNumberField",
-                "type":"text",
-                "value":label
-            }));
-
-            var contactNumberFormGroup = getTag("<div/>",{
-                "class": label + "-number row"
-            });
-
-            var contactNumberFormGroupInner = getTag("<div/>",{
-                "class": "col-sm-12"
-            });
-
-            var contactNumberInputGroupParent = getTag("<div/>", {
-                "class": "col-sm-6"
-            });
-
-            var contactNumberInputGroup = getTag("<div/>",{
-                "class":"input-group"
-            });
-
-            var contactNumberInput = getTag("<input/>",{
-                "type":"text",
-                "class":"form-control",
-                "value":number
-            });
-
-            var contactNumberInputActionParent = getTag("<span/>",{
-                "class":"input-group-btn"
-            });
-
-            contactNumberInputActionParent.append(getTag("<button/>",{
-                "class":"btn btn-default",
-                "type": "button",
-                "text": "X"
-            }));
-
-            contactNumberInputGroup.append(
-                contactNumberInput,
-                contactNumberInputActionParent
-            );
-
-            contactNumberInputGroupParent.append(
-                contactNumberInputGroup
-            );
-
-            contactNumberFormGroupInner.append(
-                contactNumberLabelFormGroup,
-                contactNumberInputGroupParent
-            );
-
-            contactNumberFormGroup.append(
-                contactNumberFormGroupInner
-            );
-
+            var contactNumberFormGroup = getTelephoneNumberFormGroup(label, number);
             numberRow.append(
                 contactNumberFormGroup
             );
-
         }
     }
 
@@ -275,7 +207,7 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
     });
 
     var addTelephoneNumberButton = getTag("<button/>",{
-            "id":"contact-" + contactData.contact_id + "AddNumberBtn",
+            "id":"contact" + contactData.contact_id + "AddNumberBtn",
             "type":"button",
             "class":"btn btn-primary btn-block",
             "text":"Add Number "
@@ -285,9 +217,82 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
     addTelephoneNumberParent.append(addTelephoneNumberButton);
     numberRow.append(addTelephoneNumberParent);
 
+    addTelephoneNumberButton.on('click', function(){
+        console.log('boop');
+    });
     /**
      * add code here for add new number button.
      */
 
     telephoneNumbersParent.append(numberRow);
+}
+
+function getTelephoneNumberFormGroup(label, number) {
+
+    label = label || "";
+    number = number || "";
+
+    var contactNumberLabelFormGroup = getTag("<div/>",{
+        "class":"form-group col-sm-6"
+    });
+
+    contactNumberLabelFormGroup.append(getTag("<input/>",{
+        "id":"contactModalTelephoneNumberLabel",
+        "class":"form-control contactNumberField",
+        "type":"text",
+        "value":label
+    }));
+
+    var contactNumberFormGroup = getTag("<div/>",{
+        "class": "telephone-number row"
+    });
+
+    var contactNumberFormGroupInner = getTag("<div/>",{
+        "class": "col-sm-12"
+    });
+
+    var contactNumberInputGroupParent = getTag("<div/>", {
+        "class": "col-sm-6"
+    });
+
+    var contactNumberInputGroup = getTag("<div/>",{
+        "class":"input-group"
+    });
+
+    var contactNumberInput = getTag("<input/>",{
+        "type":"text",
+        "class":"form-control",
+        "value":number
+    });
+
+    var contactNumberInputActionParent = getTag("<span/>",{
+        "class":"input-group-btn"
+    });
+
+    contactNumberInputActionParent.append(getTag("<button/>",{
+        "class":"btn btn-default",
+        "type": "button",
+        "text": "X"
+    }));
+
+    contactNumberInputGroup.append(
+        contactNumberInput,
+        contactNumberInputActionParent
+    );
+
+    contactNumberInputGroupParent.append(
+        contactNumberInputGroup
+    );
+
+    contactNumberFormGroupInner.append(
+        contactNumberLabelFormGroup,
+        contactNumberInputGroupParent
+    );
+
+    contactNumberFormGroup.append(
+        contactNumberFormGroupInner
+    );
+
+    return contactNumberFormGroup;
+
 }
