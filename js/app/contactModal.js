@@ -167,7 +167,7 @@ function showContactModal(modalData) {
         keyboard: 'true'
     }).on({
         'shown.bs.modal': function (e) {
-            setTimeout(initModalTelephoneNumberSection(contactTelephoneSectionParent, contactTelephoneNumbers), 0);
+            setTimeout(initModalTelephoneNumberSection(contactTelephoneSectionParent, contactTelephoneNumbers, contactData), 0);
         },
         'hidden.bs.modal': function (e) {
             setTimeout(refreshCurrent(), 0);
@@ -177,7 +177,9 @@ function showContactModal(modalData) {
 
 }
 
-function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumbers) {
+function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumbers, contactData) {
+
+    console.log(contactData);
 
     telephoneNumbersParent = $(telephoneNumbersParent);
 
@@ -263,6 +265,26 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
 
         }
     }
+
+    var addTelephoneNumberParent = getTag("<div/>",{
+        "class":"col-sm-12"
+    });
+
+    var addTelephoneNumberButtonIcon = getTag("<span/>",{
+        "class":"glyphicon glyphicon-plus"
+    });
+
+    var addTelephoneNumberButton = getTag("<button/>",{
+            "id":"contact-" + contactData.contact_id + "AddNumberBtn",
+            "type":"button",
+            "class":"btn btn-primary btn-block",
+            "text":"Add Number "
+        });
+
+    addTelephoneNumberButton.append(addTelephoneNumberButtonIcon);
+    addTelephoneNumberParent.append(addTelephoneNumberButton);
+    numberRow.append(addTelephoneNumberParent);
+
     /**
      * add code here for add new number button.
      */
