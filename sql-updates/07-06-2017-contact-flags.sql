@@ -1,0 +1,3 @@
+ALTER TABLE `flags` CHANGE `contact_id` `flag_id` INT(11) NOT NULL AUTO_INCREMENT, CHANGE `contact_name` `flag_contact_id` INT(11) NULL DEFAULT NULL, CHANGE `contact_contact_numbers` `flag_proprietor_id` INT(11) NULL DEFAULT NULL;
+
+ALTER TABLE `flags` ADD `flag_description` TEXT NULL DEFAULT NULL AFTER `flag_proprietor_id`, ADD `flag_severity` ENUM('info','warning','danger') NOT NULL AFTER `flag_description`;

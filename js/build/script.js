@@ -12839,13 +12839,13 @@ function processSingleClientResponse(singleResponse) {
 function showContactModal(modalData) {
 
     var contactData = modalData['contact-details'][0];
+    var contactTelephoneNumbers = contactData['contact_contact_numbers'];
+    contactTelephoneNumbers = JSON.parse(contactTelephoneNumbers);
     var contactProrpietors = modalData['contact-proprietors'];
-
-    console.log(contactData, contactData.contact_name, contactProrpietors);
 
     var contactModalParent = getTag("<div/>",{
         "class":"modal fade contactModal",
-        "id":"jobModal"+contactData.contact_id,
+        "id":"contactModal"+contactData.contact_id,
         "tabindex":"-1",
         "role":"dialog"
     });
@@ -12916,7 +12916,7 @@ function showContactModal(modalData) {
     // Contact Name
 
     var contactNameFormGroup = getTag("<div/>",{
-        "class":"form-group col-sm-4"
+        "class":"form-group col-sm-12"
     });
 
     contactNameFormGroup.append(getTag("<label/>",{
@@ -12927,13 +12927,41 @@ function showContactModal(modalData) {
     contactNameFormGroup.append(getTag("<input/>",{
         "id":"contactModal"+contactData.contact_id+"ContactName",
         "class":"form-control contactModalField",
-        "disabled":"disabled",
         "type":"text",
         "data-dbvar":"contact_name",
         "value":contactData.contact_name
     }));
 
-    modalBody.append(contactNameFormGroup);
+
+    // Contact Telephone Numbers
+
+    var contactTelephoneSectionParent = getTag("<div/>",{
+        "id":"contact" + contactData.contact_id + "TelephoneNumbers",
+        "class":"form-group col-sm-12"
+    });
+
+
+    // Contact Details Section
+
+    var contactDetailsSectionParent = getTag("<div/>", {
+       "id":"contactModal"+contactData.contact_id+"ContactDetailsSection",
+        "class":"col-sm-6"
+    });
+
+    var contactDetailsSection = getTag("<div/>", {
+        "class":"row"
+    });
+
+    contactDetailsSectionParent.append(
+        contactDetailsSection
+    );
+
+    contactDetailsSection.append(
+      contactNameFormGroup,
+      contactTelephoneSectionParent
+    );
+
+    modalBody.append(contactDetailsSectionParent);
 
     contactModalContent.append(contactModalHeader);
     contactModalContent.append(modalBody);
@@ -12942,15 +12970,138 @@ function showContactModal(modalData) {
     contactModalDialog.append(contactModalContent);
     contactModalParent.append(contactModalDialog);
 
+    $('.contact-modal').remove();
+
     $('body').append(contactModalParent);
-    $('#jobModal'+contactData.contact_id).modal({
+
+    $('#contactModal'+contactData.contact_id).modal({
         backdrop: 'static',
         keyboard: 'true'
-    })
-        .on('hidden.bs.modal', function (e) {
+    }).on({
+        'shown.bs.modal': function (e) {
+            setTimeout(initModalTelephoneNumberSection(contactTelephoneSectionParent, contactTelephoneNumbers, contactData), 0);
+        },
+        'hidden.bs.modal': function (e) {
             setTimeout(refreshCurrent(), 0);
+
+        }
+    });
+
+}
+
+function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumbers, contactData) {
+
+    console.log(contactData);
+
+    telephoneNumbersParent = $(telephoneNumbersParent);
+
+    telephoneNumbersParent.empty();
+
+    var contactNumberCount = 0;
+
+    var numberRow = getTag('<div/>', {
+        "class":"row"
+    });
+
+    for (var label in telephoneNumbers) {
+        if (telephoneNumbers.hasOwnProperty(label)) {
+
+            contactNumberCount ++;
+
+            var number = telephoneNumbers[label];
+
+            var contactNumberLabelFormGroup = getTag("<div/>",{
+                "class":"form-group col-sm-6"
+            });
+
+            contactNumberLabelFormGroup.append(getTag("<input/>",{
+                "id":"contactModalTelephoneNumberLabel" + contactNumberCount,
+                "class":"form-control contactNumberField",
+                "type":"text",
+                "value":label
+            }));
+
+            var contactNumberFormGroup = getTag("<div/>",{
+                "class": label + "-number row"
+            });
+
+            var contactNumberFormGroupInner = getTag("<div/>",{
+                "class": "col-sm-12"
+            });
+
+            var contactNumberInputGroupParent = getTag("<div/>", {
+                "class": "col-sm-6"
+            });
+
+            var contactNumberInputGroup = getTag("<div/>",{
+                "class":"input-group"
+            });
+
+            var contactNumberInput = getTag("<input/>",{
+                "type":"text",
+                "class":"form-control",
+                "value":number
+            });
+
+            var contactNumberInputActionParent = getTag("<span/>",{
+                "class":"input-group-btn"
+            });
+
+            contactNumberInputActionParent.append(getTag("<button/>",{
+                "class":"btn btn-default",
+                "type": "button",
+                "text": "X"
+            }));
+
+            contactNumberInputGroup.append(
+                contactNumberInput,
+                contactNumberInputActionParent
+            );
+
+            contactNumberInputGroupParent.append(
+                contactNumberInputGroup
+            );
+
+            contactNumberFormGroupInner.append(
+                contactNumberLabelFormGroup,
+                contactNumberInputGroupParent
+            );
+
+            contactNumberFormGroup.append(
+                contactNumberFormGroupInner
+            );
+
+            numberRow.append(
+                contactNumberFormGroup
+            );
+
+        }
+    }
+
+    var addTelephoneNumberParent = getTag("<div/>",{
+        "class":"col-sm-12"
+    });
+
+    var addTelephoneNumberButtonIcon = getTag("<span/>",{
+        "class":"glyphicon glyphicon-plus"
+    });
+
+    var addTelephoneNumberButton = getTag("<button/>",{
+            "id":"contact-" + contactData.contact_id + "AddNumberBtn",
+            "type":"button",
+            "class":"btn btn-primary btn-block",
+            "text":"Add Number "
         });
 
+    addTelephoneNumberButton.append(addTelephoneNumberButtonIcon);
+    addTelephoneNumberParent.append(addTelephoneNumberButton);
+    numberRow.append(addTelephoneNumberParent);
+
+    /**
+     * add code here for add new number button.
+     */
+
+    telephoneNumbersParent.append(numberRow);
 }
 function openInfiniteListModal(modalItemType, modalItemId) {
 
