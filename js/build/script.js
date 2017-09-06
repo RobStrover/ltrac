@@ -12926,7 +12926,7 @@ function showContactModal(modalData) {
 
     contactNameFormGroup.append(getTag("<input/>",{
         "id":"contactModal"+contactData.contact_id+"ContactName",
-        "class":"form-control contactModalField",
+        "class":"form-control contact-modal-field",
         "type":"text",
         "data-dbvar":"contact_name",
         "value":contactData.contact_name
@@ -12970,8 +12970,6 @@ function showContactModal(modalData) {
     contactModalDialog.append(contactModalContent);
     contactModalParent.append(contactModalDialog);
 
-    $('.contact-modal').remove();
-
     $('body').append(contactModalParent);
 
     $('#contactModal'+contactData.contact_id).modal({
@@ -12983,6 +12981,7 @@ function showContactModal(modalData) {
         },
         'hidden.bs.modal': function (e) {
             setTimeout(refreshCurrent(), 0);
+            contactModalParent.remove();
 
         }
     });
@@ -13010,9 +13009,6 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
         }
     }
 
-    var addTelephoneNumberParent = getTag("<div/>",{
-        "class":"col-sm-12"
-    });
 
     var addTelephoneNumberButtonIcon = getTag("<span/>",{
         "class":"glyphicon glyphicon-plus"
@@ -13025,19 +13021,33 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
             "text":"Add Number "
         });
 
+    telephoneNumbersParent.append(numberRow);
+
     addTelephoneNumberButton.append(addTelephoneNumberButtonIcon);
-    addTelephoneNumberParent.append(addTelephoneNumberButton);
-    numberRow.append(addTelephoneNumberParent);
+    telephoneNumbersParent.append(addTelephoneNumberButton);
 
     addTelephoneNumberButton.on('click', function(){
-        console.log('boop');
+        var newNumber = getTelephoneNumberFormGroup();
+        numberRow.append(newNumber);
+        setRemoveTelephoneNumberButtonListeners();
     });
-    /**
-     * add code here for add new number button.
-     */
-
-    telephoneNumbersParent.append(numberRow);
+    setRemoveTelephoneNumberButtonListeners();
+    saveContactModal(contactData.contact_id);
 }
+
+function setRemoveTelephoneNumberButtonListeners() {
+
+    var telephoneNumberButtons = $('.remove-number-button');
+    telephoneNumberButtons.unbind('click');
+    telephoneNumberButtons.on('click', function() {
+        var numberButton = $(this);
+        var numberToDelete = numberButton.closest('.telephone-number');
+        numberToDelete.remove();
+    });
+
+}
+
+
 
 function getTelephoneNumberFormGroup(label, number) {
 
@@ -13049,8 +13059,7 @@ function getTelephoneNumberFormGroup(label, number) {
     });
 
     contactNumberLabelFormGroup.append(getTag("<input/>",{
-        "id":"contactModalTelephoneNumberLabel",
-        "class":"form-control contactNumberField",
+        "class":"form-control contact-modal-field",
         "type":"text",
         "value":label
     }));
@@ -13073,7 +13082,7 @@ function getTelephoneNumberFormGroup(label, number) {
 
     var contactNumberInput = getTag("<input/>",{
         "type":"text",
-        "class":"form-control",
+        "class":"form-control contact-modal-field",
         "value":number
     });
 
@@ -13082,7 +13091,7 @@ function getTelephoneNumberFormGroup(label, number) {
     });
 
     contactNumberInputActionParent.append(getTag("<button/>",{
-        "class":"btn btn-default",
+        "class":"btn btn-default remove-number-button",
         "type": "button",
         "text": "X"
     }));
@@ -13106,6 +13115,16 @@ function getTelephoneNumberFormGroup(label, number) {
     );
 
     return contactNumberFormGroup;
+
+}
+
+function updateSaveListeners(contactId) {
+
+}
+
+function saveContactModal(contactId) {
+    var formFields = $("#contactModal"+contactId+" .contact-modal-field");
+    console.log(formFields);
 
 }
 function openInfiniteListModal(modalItemType, modalItemId) {
