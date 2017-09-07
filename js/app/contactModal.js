@@ -217,22 +217,33 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
     addTelephoneNumberButton.on('click', function(){
         var newNumber = getTelephoneNumberFormGroup();
         numberRow.append(newNumber);
-        setRemoveTelephoneNumberButtonListeners();
+        setRemoveTelephoneNumberButtonListeners(contactData.contact_id);
+        setContactFieldSaveListeners(contactData.contact_id);
     });
-    setRemoveTelephoneNumberButtonListeners();
-    saveContactModal(contactData.contact_id);
+    setRemoveTelephoneNumberButtonListeners(contactData.contact_id);
+    setContactFieldSaveListeners(contactData.contact_id);
 }
 
-function setRemoveTelephoneNumberButtonListeners() {
+function setRemoveTelephoneNumberButtonListeners(contact_id) {
 
-    var telephoneNumberButtons = $('.remove-number-button');
+    var telephoneNumberButtons = $('#contactModal'+contact_id+' .remove-number-button');
     telephoneNumberButtons.unbind('click');
     telephoneNumberButtons.on('click', function() {
         var numberButton = $(this);
         var numberToDelete = numberButton.closest('.telephone-number');
         numberToDelete.remove();
+        saveContactModal(contact_id);
     });
 
+}
+
+function setContactFieldSaveListeners(contact_id) {
+
+    var fields = $("#contactModal"+contact_id+" .contact-modal-field");
+    fields.unbind("blur");
+    fields.on("blur", function(){
+        saveContactModal(contact_id);
+    });
 }
 
 
@@ -247,7 +258,7 @@ function getTelephoneNumberFormGroup(label, number) {
     });
 
     contactNumberLabelFormGroup.append(getTag("<input/>",{
-        "class":"form-control contact-modal-field",
+        "class":"form-control contact-number-label contact-modal-field",
         "type":"text",
         "value":label
     }));
@@ -270,7 +281,7 @@ function getTelephoneNumberFormGroup(label, number) {
 
     var contactNumberInput = getTag("<input/>",{
         "type":"text",
-        "class":"form-control contact-modal-field",
+        "class":"form-control contact-number contact-modal-field",
         "value":number
     });
 
@@ -306,12 +317,22 @@ function getTelephoneNumberFormGroup(label, number) {
 
 }
 
-function updateSaveListeners(contactId) {
-
-}
-
 function saveContactModal(contactId) {
-    var formFields = $("#contactModal"+contactId+" .contact-modal-field");
-    console.log(formFields);
+    var formFieldParents = $("#contactModal"+contactId+" .telephone-number");
+    var phoneNumbersToSave = [];
+
+    formFieldParents.each(function(key) {
+        var formFieldParent = $(this);
+        var formFieldLabel = formFieldParent.find('.contact-number-label');
+        var formField = formFieldParent.find('.contact-number');
+
+        var formFieldLabelValue = formFieldLabel.val();
+        var formFieldValue = formField.val();
+
+        var phoneNumber = {formFieldLabelValue : formFieldValue};
+
+        phoneNumbersToSave[key] = phoneNumber;
+    });
+    console.log(phoneNumbersToSave);
 
 }
