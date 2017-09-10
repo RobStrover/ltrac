@@ -347,7 +347,7 @@ function saveContactModal(contactId) {
     var contactNameValue = contactNameField.val();
 
     var formFieldParents = $("#contactModal"+contactId+" .telephone-number");
-    var phoneNumbersToSave = [];
+    var phoneNumbersToSave = {};
 
     formFieldParents.each(function(key) {
         var formFieldParent = $(this);
@@ -357,7 +357,7 @@ function saveContactModal(contactId) {
         var formFieldLabelValue = formFieldLabel.val();
         var formFieldValue = formField.val();
 
-        var phoneNumber = [];
+        var phoneNumber = {};
 
         phoneNumber[formFieldLabelValue] = formFieldValue;
 
@@ -369,7 +369,7 @@ function saveContactModal(contactId) {
         dataType: "text",
         url: "app/ajax_return.php",
         data: {
-            function: 'saveContact',
+            function: 'saveContactDetails',
             contactId: contactId,
             contactName: contactNameValue,
             contactNumbers: phoneNumbersToSave
