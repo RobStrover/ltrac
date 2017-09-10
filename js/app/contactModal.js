@@ -83,7 +83,7 @@ function showContactModal(modalData) {
     });
 
     var modalFooterButton = getTag("<button/>",{
-        "id":"modalEditButton",
+        "id":"contactModalEditButton",
         "type":"button",
         "data-job":contactData.contact_id,
         "class":"btn btn-primary",
@@ -114,8 +114,9 @@ function showContactModal(modalData) {
 
     contactNameFormGroup.append(getTag("<input/>",{
         "id":"contactModal"+contactData.contact_id+"ContactName",
-        "class":"form-control contact-modal-field",
+        "class":"form-control contact-modal-field contact-name-field",
         "type":"text",
+        "disabled":"disabled",
         "data-dbvar":"contact_name",
         "value":contactData.contact_name
     }));
@@ -205,7 +206,7 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
     var addTelephoneNumberButton = getTag("<button/>",{
             "id":"contact" + contactData.contact_id + "AddNumberBtn",
             "type":"button",
-            "class":"btn btn-primary btn-block",
+            "class":"btn btn-primary btn-block add-number-button hide",
             "text":"Add Number "
         });
 
@@ -222,6 +223,25 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
     });
     setRemoveTelephoneNumberButtonListeners(contactData.contact_id);
     setContactFieldSaveListeners(contactData.contact_id);
+    contactModalEditButtonListener(contactData.contact_id);
+}
+
+function contactModalEditButtonListener(contact_id) {
+    var contactModalEditButton = $('#contactModal'+contact_id+' #contactModalEditButton');
+    contactModalEditButton.on('click', function(e){
+        e.preventDefault();
+        makeContactEditable(contact_id);
+    });
+}
+
+function makeContactEditable(contact_id) {
+    var contactFields = $('#contactModal'+contact_id+' .contact-modal-field');
+    var contactDeleteButtons = $('#contactModal'+contact_id+' .remove-number-button');
+    var contactAddButton = $('#contactModal'+contact_id+' .add-number-button');
+
+    contactFields.removeAttr('disabled');
+    contactDeleteButtons.removeClass('hide');
+    contactAddButton.removeClass('hide');
 }
 
 function setRemoveTelephoneNumberButtonListeners(contact_id) {
@@ -260,6 +280,7 @@ function getTelephoneNumberFormGroup(label, number) {
     contactNumberLabelFormGroup.append(getTag("<input/>",{
         "class":"form-control contact-number-label contact-modal-field",
         "type":"text",
+        "disabled":"disabled",
         "value":label
     }));
 
@@ -282,15 +303,16 @@ function getTelephoneNumberFormGroup(label, number) {
     var contactNumberInput = getTag("<input/>",{
         "type":"text",
         "class":"form-control contact-number contact-modal-field",
+        "disabled":"disabled",
         "value":number
     });
 
     var contactNumberInputActionParent = getTag("<span/>",{
-        "class":"input-group-btn"
+        "class":"input-group-btn contact-number-delete-button"
     });
 
     contactNumberInputActionParent.append(getTag("<button/>",{
-        "class":"btn btn-default remove-number-button",
+        "class":"btn btn-default remove-number-button hide",
         "type": "button",
         "text": "X"
     }));
@@ -318,6 +340,12 @@ function getTelephoneNumberFormGroup(label, number) {
 }
 
 function saveContactModal(contactId) {
+
+    showSpinner();
+
+    var contactNameField = $("#contactModal"+contactId+" .contact-name-field");
+    var contactNameValue = contactNameField.val();
+
     var formFieldParents = $("#contactModal"+contactId+" .telephone-number");
     var phoneNumbersToSave = [];
 
@@ -329,10 +357,26 @@ function saveContactModal(contactId) {
         var formFieldLabelValue = formFieldLabel.val();
         var formFieldValue = formField.val();
 
-        var phoneNumber = {formFieldLabelValue : formFieldValue};
+        var phoneNumber = [];
+
+        phoneNumber[formFieldLabelValue] = formFieldValue;
 
         phoneNumbersToSave[key] = phoneNumber;
     });
-    console.log(phoneNumbersToSave);
 
+    $.ajax({
+        type: 'POST',
+        dataType: "text",
+        url: "app/ajax_return.php",
+        data: {
+            function: 'saveContact',
+            contactId: contactId,
+            contactName: contactNameValue,
+            contactNumbers: phoneNumbersToSave
+        },
+        success: function (currentResponse) {
+        }
+    });
+
+    hideSpinner();
 }
