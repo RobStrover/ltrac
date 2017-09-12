@@ -12999,11 +12999,14 @@ function initModalTelephoneNumberSection(telephoneNumbersParent, telephoneNumber
         "class":"row"
     });
 
-    for (var label in telephoneNumbers) {
-        if (telephoneNumbers.hasOwnProperty(label)) {
-            var number = telephoneNumbers[label];
+    console.log(telephoneNumbers);
+    for (var key in telephoneNumbers) {
+        var telephoneNumber = telephoneNumbers[key];
+        for (var key in telephoneNumber) {
+        var label = key;
+        var number = telephoneNumber[key];
 
-            var contactNumberFormGroup = getTelephoneNumberFormGroup(label, number);
+        var contactNumberFormGroup = getTelephoneNumberFormGroup(label, number);
             numberRow.append(
                 contactNumberFormGroup
             );
