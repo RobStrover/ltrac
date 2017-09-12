@@ -10,8 +10,10 @@ use \Repositories\Job\Writing\DeleteJob as DeleteJob;
 use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
 use \Repositories\Contact\Reading\GetContactSingle as GetContactSingle;
+use \Repositories\Contact\Writing\SaveContact as SaveContact;
 use \Repositories\Reporting\CurrentJobsReport as CurrentJobsReport;
 use \Repositories\InfiniteList\InfiniteListUpdate as InfiniteListUpdate;
+
 
 require_once 'start.php';
 
@@ -87,6 +89,19 @@ if(array_key_exists('function',$_POST)){
             $infiniteListUpdate->searchLimitFrom = $searchLimitFrom;
             $resultToReturn = $infiniteListUpdate->getNextResults();
             returnJson($resultToReturn);
+            break;
+        case 'saveContactDetails':
+            $contactId = filter_input(INPUT_POST, 'contactId', FILTER_SANITIZE_NUMBER_INT);
+            $contactName = filter_input(INPUT_POST, 'contactName', FILTER_SANITIZE_STRING);
+            $contactNumbers = $_POST['contactNumbers'];
+            $contactData = array(
+                "contact_name" => $contactName,
+                "contact_contact_numbers" => $contactNumbers
+            );
+            $saveContact = new SaveContact();
+            if($saveContact->saveContactContent($contactId, $contactData)){
+                return true;
+            }
             break;
         default:
             getError('no function requested');
