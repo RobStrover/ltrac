@@ -14,6 +14,8 @@ class SaveContact
         $DbConnection = new Connection();
         if(null !== $DbConnection->connection) {
 
+            $contactContent['contact_contact_numbers'] = json_encode($contactContent['contact_contact_numbers']);
+
             $contactContent = $this->prepareContent($contactContent);
 
             $saveQuery = sprintf("UPDATE contact SET %s WHERE contact_id = %s", $contactContent, $contactId);
@@ -32,7 +34,10 @@ class SaveContact
         $preparedJobContent = '';
         foreach($contactContent as $key => $value)
         {
-            $preparedJobContent = $preparedJobContent .= $key.'="'.$value.'",';
+            $preparedJobContent = $preparedJobContent .= $key."='".$value."'";
+            if (end($contactContent) !== $value) {
+                $preparedJobContent = $preparedJobContent . ",";
+            }
         }
         return $preparedJobContent;
     }

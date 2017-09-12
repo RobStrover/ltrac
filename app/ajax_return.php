@@ -94,8 +94,12 @@ if(array_key_exists('function',$_POST)){
             $contactId = filter_input(INPUT_POST, 'contactId', FILTER_SANITIZE_NUMBER_INT);
             $contactName = filter_input(INPUT_POST, 'contactName', FILTER_SANITIZE_STRING);
             $contactNumbers = $_POST['contactNumbers'];
-            $contact = new SaveContact($contactId);
-            if($contact->saveContact($jobId)){
+            $contactData = array(
+                "contact_name" => $contactName,
+                "contact_contact_numbers" => $contactNumbers
+            );
+            $saveContact = new SaveContact();
+            if($saveContact->saveContactContent($contactId, $contactData)){
                 return true;
             }
             break;
