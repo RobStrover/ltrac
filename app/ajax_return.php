@@ -11,6 +11,7 @@ use \Repositories\Job\Writing\ArchiveJob as ArchiveJob;
 use \Repositories\Proprietor\Reading\GetProprietorSingle as GetProprietorSingle;
 use \Repositories\Contact\Reading\GetContactSingle as GetContactSingle;
 use \Repositories\Contact\Writing\SaveContact as SaveContact;
+use \Repositories\Contact\Writing\AddContact as AddContact;
 use \Repositories\Reporting\CurrentJobsReport as CurrentJobsReport;
 use \Repositories\InfiniteList\InfiniteListUpdate as InfiniteListUpdate;
 
@@ -42,6 +43,12 @@ if(array_key_exists('function',$_POST)){
             $GetJobSingle = new GetJobSingle();
             $singleJob = $GetJobSingle->getSingleJob($addedJob);
             returnJson($singleJob);
+            break;
+        case 'addContact':
+            $AddContact = new AddContact();
+            $addedContact = $AddContact->addContact();
+            $singleContact = new GetContactSingle($addedContact);
+            returnJson($singleContact);
             break;
         case 'deleteJob':
             $jobId = filter_input(INPUT_POST, 'jobId', FILTER_SANITIZE_NUMBER_INT);

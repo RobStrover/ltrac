@@ -170,8 +170,9 @@ function showContactModal(modalData) {
         },
         'hidden.bs.modal': function (e) {
             setTimeout(refreshCurrent(), 0);
+            setTimeout(initInfiniteList('clients-search'), 0);
             contactModalParent.remove();
-
+            $('#contactModal'+contactData.contact_id).unbind('hidden.bs.modal shown.bs.modal');
         }
     });
 
